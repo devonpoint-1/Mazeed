@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مزيد | مناهج البحث — أ.د. رنا عبدالعال</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0b0f1a;--ink2:#131929;--ink3:#1c2640;
+  --card:#182030;--card2:#1f2c42;--card3:#253350;
+  --gold:#c8a84b;--gold2:#e8ca78;--gold3:#a07828;
+  --silver:#8ea8c8;--silver2:#b8d4f0;
+  --green:#52c87a;--red:#f07878;--orange:#e89050;
+  --text:#e0e8f8;--text2:#8899bb;--text3:#5566884;
+  --border:rgba(200,168,75,.18);--border2:rgba(200,168,75,.08);
+  --r8:8px;--r12:12px;--r16:16px;--r24:24px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{font-family:'Tajawal',sans-serif;background:var(--ink);color:var(--text);min-height:100vh;overflow-x:hidden;line-height:1.7;}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--ink2);}::-webkit-scrollbar-thumb{background:var(--gold3);border-radius:3px;}
+
+/* ── SPLASH ── */
+#splash{
+  position:fixed;inset:0;z-index:9999;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse 80% 60% at 40% 30%,#182848 0%,var(--ink) 70%);
+  transition:opacity .6s,transform .6s;
+}
+#splash.out{opacity:0;pointer-events:none;transform:scale(.97);}
+.splash-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+.sb-line{position:absolute;height:1px;background:linear-gradient(90deg,transparent,rgba(200,168,75,.3),transparent);animation:scan 4s linear infinite;}
+.sb-line:nth-child(1){top:20%;animation-delay:0s;width:60%;right:0;}
+.sb-line:nth-child(2){top:55%;animation-delay:1.5s;width:80%;left:0;}
+.sb-line:nth-child(3){top:78%;animation-delay:3s;width:40%;right:10%;}
+@keyframes scan{from{opacity:0;transform:scaleX(0);}50%{opacity:1;}to{opacity:0;transform:scaleX(1);}}
+
+.splash-card{
+  position:relative;z-index:1;
+  text-align:center;padding:3rem 2.5rem;max-width:520px;width:90%;
+  background:linear-gradient(145deg,rgba(25,35,60,.9),rgba(15,20,35,.95));
+  border:1px solid rgba(200,168,75,.25);border-radius:var(--r24);
+  backdrop-filter:blur(20px);
+  box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 0 1px rgba(200,168,75,.08);
+  animation:riseIn .8s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes riseIn{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+
+.splash-logo{
+  font-family:'Cairo',sans-serif;font-size:4.5rem;font-weight:900;line-height:1;
+  background:linear-gradient(135deg,var(--gold2) 0%,var(--gold) 50%,var(--gold3) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  letter-spacing:.05em;
+}
+.splash-tagline{font-size:.85rem;color:var(--text2);letter-spacing:.18em;text-transform:uppercase;margin-top:.3rem;margin-bottom:1.8rem;}
+
+.dr-badge{
+  background:linear-gradient(135deg,rgba(200,168,75,.12),rgba(200,168,75,.04));
+  border:1px solid rgba(200,168,75,.22);border-radius:var(--r16);
+  padding:1.4rem 1.8rem;margin-bottom:1.8rem;text-align:right;
+}
+.dr-flag{display:flex;align-items:center;gap:.7rem;margin-bottom:.8rem;}
+.dr-icon{
+  width:52px;height:52px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--gold3),var(--gold));
+  display:flex;align-items:center;justify-content:center;font-size:1.4rem;
+  box-shadow:0 0 20px rgba(200,168,75,.35);
+}
+.dr-name{font-family:'Cairo',sans-serif;font-size:1.15rem;font-weight:700;color:var(--gold2);}
+.dr-rank{font-size:.78rem;color:var(--text2);margin-top:.2rem;}
+.dr-roles{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.8rem;}
+.dr-role{
+  font-size:.72rem;padding:.3rem .7rem;border-radius:20px;
+  background:rgba(200,168,75,.1);border:1px solid rgba(200,168,75,.2);color:var(--gold2);
+}
+
+.splash-enter{
+  display:inline-flex;align-items:center;gap:.6rem;
+  background:linear-gradient(135deg,var(--gold3),var(--gold));
+  color:var(--ink);font-family:'Cairo',sans-serif;font-weight:700;font-size:1rem;
+  padding:.85rem 2.2rem;border-radius:50px;border:none;cursor:pointer;
+  box-shadow:0 6px 25px rgba(200,168,75,.4);
+  transition:transform .25s,box-shadow .25s;
+}
+.splash-enter:hover{transform:translateY(-3px);box-shadow:0 10px 35px rgba(200,168,75,.55);}
+
+/* ── TOPBAR ── */
+#topbar{
+  position:sticky;top:0;z-index:500;
+  background:rgba(11,15,26,.92);backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:1rem;padding:.7rem 1.2rem;
+  min-height:56px;
+}
+.tb-logo{font-family:'Cairo',sans-serif;font-size:1.5rem;font-weight:900;background:linear-gradient(135deg,var(--gold2),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;cursor:pointer;flex-shrink:0;}
+.tb-dr{flex:1;font-size:.72rem;color:var(--text2);text-align:center;line-height:1.4;display:none;}
+.tb-dr strong{color:var(--gold2);display:block;font-size:.8rem;}
+.tb-ham{background:none;border:none;color:var(--gold);font-size:1.3rem;cursor:pointer;padding:.3rem;flex-shrink:0;}
+@media(min-width:769px){.tb-dr{display:block;}.tb-ham{display:none;}}
+
+/* ── LAYOUT ── */
+#app{display:none;flex-direction:column;min-height:100vh;}
+#app.on{display:flex;}
+.layout{display:flex;flex:1;}
+
+/* ── SIDEBAR ── */
+#sidebar{
+  width:255px;min-width:255px;background:var(--card);
+  border-left:1px solid var(--border2);
+  display:flex;flex-direction:column;overflow-y:auto;padding:1.2rem 0 2rem;
+  transition:transform .3s cubic-bezier(.4,0,.2,1);
+}
+.nav-sec{font-size:.65rem;font-weight:700;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;padding:.9rem 1.4rem .4rem;opacity:.7;}
+.nav-item{
+  display:flex;align-items:center;gap:.75rem;padding:.7rem 1.4rem;
+  color:var(--text2);cursor:pointer;font-size:.88rem;
+  border-right:3px solid transparent;transition:all .2s;user-select:none;
+}
+.nav-item:hover{background:rgba(200,168,75,.06);color:var(--text);}
+.nav-item.active{background:rgba(200,168,75,.11);color:var(--gold2);border-right-color:var(--gold);}
+.nav-item .ni{font-size:1rem;width:1.3rem;text-align:center;flex-shrink:0;}
+@media(max-width:768px){
+  #sidebar{position:fixed;top:56px;right:-260px;height:calc(100vh - 56px);z-index:400;}
+  #sidebar.open{right:0;box-shadow:-8px 0 30px rgba(0,0,0,.5);}
+}
+
+/* ── MAIN ── */
+.main{flex:1;overflow-y:auto;padding:1.8rem;background:var(--ink);}
+.page{display:none;animation:pgIn .35s ease;}
+.page.on{display:block;}
+@keyframes pgIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── SHARED COMPONENTS ── */
+.ph{margin-bottom:1.8rem;}
+.ph-title{font-family:'Cairo',sans-serif;font-size:1.7rem;font-weight:900;background:linear-gradient(135deg,var(--gold2),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.ph-sub{color:var(--text2);font-size:.88rem;margin-top:.3rem;}
+
+.card{background:var(--card);border:1px solid var(--border2);border-radius:var(--r16);padding:1.4rem;}
+.card-h{font-family:'Cairo',sans-serif;font-size:1rem;font-weight:700;color:var(--gold2);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem;}
+
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+@media(max-width:700px){.g2,.g3{grid-template-columns:1fr;}}
+
+.stat{background:var(--card);border:1px solid var(--border2);border-radius:var(--r12);padding:1.1rem;text-align:center;cursor:pointer;transition:border-color .2s;}
+.stat:hover{border-color:var(--gold);}
+.stat-n{font-family:'Cairo',sans-serif;font-size:2rem;font-weight:900;background:linear-gradient(135deg,var(--gold2),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.stat-l{font-size:.78rem;color:var(--text2);margin-top:.2rem;}
+
+.tag{display:inline-block;padding:.22rem .6rem;border-radius:20px;font-size:.73rem;font-weight:600;margin:.15rem;}
+.tg{background:rgba(200,168,75,.12);color:var(--gold2);border:1px solid rgba(200,168,75,.25);}
+.tb{background:rgba(140,170,200,.12);color:var(--silver2);border:1px solid rgba(140,170,200,.25);}
+.tg2{background:rgba(82,200,122,.12);color:var(--green);border:1px solid rgba(82,200,122,.25);}
+.tr{background:rgba(240,120,120,.12);color:var(--red);border:1px solid rgba(240,120,120,.25);}
+.to{background:rgba(232,144,80,.12);color:var(--orange);border:1px solid rgba(232,144,80,.25);}
+
+.btn{padding:.6rem 1.4rem;border-radius:var(--r8);border:none;cursor:pointer;font-family:'Tajawal',sans-serif;font-size:.88rem;font-weight:700;transition:all .22s;}
+.btn-g{background:linear-gradient(135deg,var(--gold3),var(--gold));color:var(--ink);}
+.btn-g:hover{transform:translateY(-2px);box-shadow:0 5px 18px rgba(200,168,75,.4);}
+.btn-o{background:transparent;border:1.5px solid var(--border);color:var(--text2);}
+.btn-o:hover{border-color:var(--gold);color:var(--gold);}
+.btn-sm{padding:.38rem .85rem;font-size:.78rem;}
+.btn-red{background:rgba(240,120,120,.1);border:1px solid var(--red);color:var(--red);}
+
+.hl{background:rgba(200,168,75,.08);border-right:3px solid var(--gold);border-radius:0 var(--r8) var(--r8) 0;padding:.7rem 1rem;color:var(--gold2);font-size:.88rem;line-height:1.8;margin:.7rem 0;}
+.hl-b{background:rgba(140,170,200,.08);border-right-color:var(--silver);}
+.hl-g{background:rgba(82,200,122,.08);border-right-color:var(--green);color:var(--green);}
+
+input,textarea,select{background:var(--card2);border:1.5px solid var(--border2);border-radius:var(--r8);padding:.6rem 1rem;color:var(--text);font-family:'Tajawal',sans-serif;font-size:.88rem;width:100%;}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--gold);}
+textarea{resize:vertical;min-height:120px;}
+.fl{margin-bottom:.9rem;}
+.fl label{font-size:.8rem;color:var(--text2);display:block;margin-bottom:.3rem;}
+
+.badge{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;border-radius:10px;background:var(--gold);color:var(--ink);font-size:.68rem;font-weight:800;padding:0 .35rem;}
+.divider{height:1px;background:var(--border2);margin:1.2rem 0;}
+
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;z-index:9000;background:var(--card2);border:1px solid var(--gold);color:var(--gold2);font-size:.88rem;padding:.75rem 1.4rem;border-radius:var(--r12);display:none;box-shadow:0 6px 20px rgba(0,0,0,.4);}
+.toast.on{display:block;animation:slideUp .3s ease;}
+@keyframes slideUp{from{transform:translateY(15px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+
+/* ── CHAPTERS ── */
+.chapter-item{background:var(--card);border:1px solid var(--border2);border-radius:var(--r12);overflow:hidden;margin-bottom:.8rem;transition:border-color .2s;}
+.chapter-item:hover{border-color:rgba(200,168,75,.3);}
+.ch-head{display:flex;align-items:center;gap:.9rem;padding:1rem 1.3rem;cursor:pointer;}
+.ch-num{width:34px;height:34px;border-radius:var(--r8);background:linear-gradient(135deg,var(--gold3),var(--gold));color:var(--ink);font-weight:900;font-size:.82rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ch-name{font-weight:600;font-size:.95rem;flex:1;}
+.ch-arrow{color:var(--gold);font-size:1rem;transition:transform .3s;flex-shrink:0;}
+.ch-body{display:none;padding:0 1.3rem 1.3rem;border-top:1px solid var(--border2);}
+.ch-body.open{display:block;}
+.ch-body p{color:var(--text2);line-height:1.9;font-size:.88rem;margin-bottom:.7rem;}
+.ch-body h4{color:var(--gold2);font-size:.9rem;margin:.9rem 0 .4rem;font-family:'Cairo',sans-serif;}
+.ch-body ul{color:var(--text2);line-height:2;font-size:.87rem;padding-right:1.2rem;}
+.ch-body li{margin-bottom:.2rem;}
+.ch-body table{width:100%;border-collapse:collapse;font-size:.83rem;margin:1rem 0;}
+.ch-body th{background:rgba(200,168,75,.15);color:var(--gold2);padding:.6rem .8rem;border:1px solid var(--border);}
+.ch-body td{padding:.55rem .8rem;border:1px solid var(--border2);color:var(--text2);vertical-align:top;}
+.ch-body tr:nth-child(even) td{background:rgba(255,255,255,.02);}
+
+/* ── FLASHCARDS ── */
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:.9rem;}
+.fc{perspective:1000px;cursor:pointer;height:175px;}
+.fc-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .5s;}
+.fc:hover .fc-inner,.fc.flipped .fc-inner{transform:rotateY(180deg);}
+.fc-front,.fc-back{position:absolute;inset:0;border-radius:var(--r12);padding:1.1rem;display:flex;flex-direction:column;justify-content:center;backface-visibility:hidden;border:1px solid var(--border2);}
+.fc-front{background:var(--card2);}
+.fc-back{background:linear-gradient(145deg,var(--card2),#1a2840);transform:rotateY(180deg);border-color:rgba(200,168,75,.3);}
+.fc-cat{font-size:.67rem;color:var(--gold);letter-spacing:.1em;font-weight:700;margin-bottom:.5rem;text-transform:uppercase;}
+.fc-q{font-size:.88rem;color:var(--text);line-height:1.6;}
+.fc-a{font-size:.84rem;color:var(--gold2);line-height:1.7;}
+.fc-hint{font-size:.68rem;color:var(--text2);margin-top:.7rem;opacity:.55;}
+
+/* ── QUIZ ── */
+.qz-wrap{max-width:720px;margin:0 auto;}
+.qz-prog{height:5px;background:var(--card2);border-radius:3px;margin-bottom:1.4rem;overflow:hidden;}
+.qz-prog-fill{height:100%;background:linear-gradient(90deg,var(--gold3),var(--gold));border-radius:3px;transition:width .4s;}
+.qz-meta{font-size:.78rem;color:var(--text2);margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem;}
+.qz-card{background:var(--card);border:1px solid var(--border2);border-radius:var(--r16);padding:1.6rem;margin-bottom:1rem;}
+.qz-q{font-size:1rem;color:var(--text);font-weight:500;line-height:1.8;}
+.qz-opts{display:flex;flex-direction:column;gap:.6rem;margin-top:1.1rem;}
+.qz-opt{background:var(--card2);border:1.5px solid var(--border2);border-radius:var(--r8);padding:.85rem 1rem;cursor:pointer;transition:all .22s;display:flex;align-items:flex-start;gap:.75rem;font-size:.88rem;line-height:1.6;}
+.qz-opt:hover:not(.disabled){border-color:var(--gold);background:rgba(200,168,75,.07);}
+.qz-opt.correct{border-color:var(--green)!important;background:rgba(82,200,122,.1)!important;color:var(--green);}
+.qz-opt.wrong{border-color:var(--red)!important;background:rgba(240,120,120,.1)!important;color:var(--red);}
+.qz-opt.disabled{cursor:default;}
+.opt-ltr{width:24px;height:24px;border-radius:6px;background:var(--card);border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0;color:var(--gold);}
+.qz-exp{background:rgba(200,168,75,.07);border:1px solid rgba(200,168,75,.25);border-radius:var(--r8);padding:.9rem 1.1rem;color:var(--gold2);font-size:.85rem;line-height:1.8;margin-top:.7rem;display:none;}
+.qz-exp.on{display:block;}
+.qz-nav{display:flex;gap:.8rem;justify-content:space-between;margin-top:1rem;}
+.score-card{text-align:center;padding:2.5rem 2rem;background:var(--card);border:1px solid var(--border2);border-radius:var(--r24);max-width:460px;margin:0 auto;}
+.score-big{font-family:'Cairo',sans-serif;font-size:3.8rem;font-weight:900;background:linear-gradient(135deg,var(--gold2),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.s-bar-row{display:flex;align-items:center;gap:.8rem;font-size:.82rem;margin:.4rem 0;}
+.s-bar-lbl{width:55px;color:var(--text2);}
+.s-bar{flex:1;height:7px;background:var(--card2);border-radius:4px;overflow:hidden;}
+.s-bar-fill{height:100%;border-radius:4px;transition:width 1s .3s;}
+.fill-g{background:var(--green);}.fill-r{background:var(--red);}
+
+/* ── ESSAY ── */
+.es-q{background:var(--card);border:1px solid var(--border2);border-radius:var(--r12);padding:1.4rem;margin-bottom:1rem;}
+.es-q-text{font-size:.95rem;color:var(--text);font-weight:600;margin-bottom:.6rem;line-height:1.75;}
+.es-ans{background:rgba(200,168,75,.05);border-right:3px solid var(--gold);border-radius:0 var(--r8) var(--r8) 0;padding:.9rem 1.1rem;display:none;}
+.es-ans.on{display:block;}
+.es-ans p,.es-ans li{color:var(--text2);font-size:.87rem;line-height:1.9;}
+.es-ans ul{padding-right:1.1rem;}
+.show-ans{background:rgba(200,168,75,.08);border:1px solid rgba(200,168,75,.22);color:var(--gold);font-size:.8rem;padding:.38rem .85rem;border-radius:var(--r8);cursor:pointer;font-family:'Tajawal',sans-serif;font-weight:600;transition:all .2s;margin-top:.7rem;}
+.show-ans:hover{background:rgba(200,168,75,.18);}
+
+/* ── STEPS (studies) ── */
+.step-row{display:flex;gap:.9rem;padding:.8rem 0;border-bottom:1px solid var(--border2);}
+.step-row:last-child{border-bottom:none;}
+.step-n{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.82rem;flex-shrink:0;color:var(--ink);}
+.step-info{flex:1;}
+.step-title{font-weight:700;font-size:.9rem;margin-bottom:.25rem;}
+.step-desc{color:var(--text2);font-size:.84rem;line-height:1.7;}
+
+/* ── NOTES ── */
+.note-item{background:var(--card);border:1px solid var(--border2);border-radius:var(--r12);padding:.95rem 1.1rem;position:relative;}
+.note-topic{display:inline-block;background:rgba(200,168,75,.12);color:var(--gold);font-size:.72rem;font-weight:700;padding:.2rem .6rem;border-radius:20px;margin-bottom:.4rem;}
+.note-text{color:var(--text2);font-size:.88rem;line-height:1.7;}
+.note-date{font-size:.72rem;color:var(--text2);opacity:.4;margin-top:.3rem;}
+.note-del{position:absolute;top:.7rem;left:.7rem;background:none;border:none;color:var(--red);cursor:pointer;font-size:.85rem;opacity:.5;transition:opacity .2s;}
+.note-del:hover{opacity:1;}
+
+/* ── FILES ── */
+.upload-zone{border:2px dashed var(--border2);border-radius:var(--r16);padding:2.2rem;text-align:center;cursor:pointer;transition:all .3s;background:var(--card);}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--gold);background:rgba(200,168,75,.04);}
+.file-item{display:flex;align-items:center;gap:.8rem;background:var(--card);border:1px solid var(--border2);border-radius:var(--r8);padding:.75rem 1rem;}
+.file-ico{font-size:1.2rem;flex-shrink:0;}
+.file-info{flex:1;}
+.file-name{font-size:.86rem;color:var(--text);font-weight:500;}
+.file-meta{font-size:.73rem;color:var(--text2);}
+.file-del{background:none;border:none;color:var(--red);cursor:pointer;font-size:.85rem;opacity:.5;transition:opacity .2s;}
+.file-del:hover{opacity:1;}
+
+/* ── VIDEOS ── */
+.vid-item{display:flex;align-items:center;gap:.9rem;background:var(--card);border:1px solid var(--border2);border-radius:var(--r12);padding:.9rem 1.1rem;}
+.vid-thumb{width:46px;height:46px;border-radius:var(--r8);background:linear-gradient(135deg,#cc2222,#990000);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+.vid-info{flex:1;}
+.vid-title{font-size:.88rem;color:var(--text);font-weight:600;}
+.vid-topic{font-size:.75rem;color:var(--gold);margin-top:.15rem;}
+.vid-open{background:rgba(200,168,75,.12);border:1px solid rgba(200,168,75,.25);color:var(--gold);font-size:.77rem;font-weight:700;padding:.35rem .85rem;border-radius:var(--r8);cursor:pointer;text-decoration:none;transition:all .2s;white-space:nowrap;}
+.vid-open:hover{background:var(--gold);color:var(--ink);}
+
+/* ── FILTER BUTTONS ── */
+.filt-row{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.2rem;}
+.filt-btn{padding:.4rem 1rem;border-radius:20px;border:1.5px solid var(--border2);background:transparent;color:var(--text2);font-family:'Tajawal',sans-serif;font-size:.82rem;cursor:pointer;transition:all .2s;}
+.filt-btn.active{background:rgba(200,168,75,.13);border-color:var(--gold);color:var(--gold);}
+.filt-btn:hover:not(.active){border-color:var(--text2);color:var(--text);}
+
+/* ── SEARCH ── */
+.search-bar{display:flex;align-items:center;gap:.5rem;background:var(--card2);border:1.5px solid var(--border2);border-radius:var(--r8);padding:.5rem 1rem;margin-bottom:1.1rem;}
+.search-bar:focus-within{border-color:var(--gold);}
+.search-bar input{background:none;border:none;color:var(--text);font-family:'Tajawal',sans-serif;font-size:.88rem;flex:1;}
+.search-bar input:focus{outline:none;}
+
+/* ── STYLE PAGE ── */
+.style-box{background:var(--card2);border-radius:var(--r12);padding:1rem 1.2rem;margin-bottom:.6rem;}
+.style-box-h{font-size:.85rem;font-weight:700;margin-bottom:.5rem;}
+.compare-table{width:100%;border-collapse:collapse;font-size:.83rem;margin-top:.8rem;}
+.compare-table th{background:rgba(200,168,75,.15);color:var(--gold2);padding:.6rem .8rem;border:1px solid var(--border);font-family:'Cairo',sans-serif;}
+.compare-table td{padding:.55rem .8rem;border:1px solid var(--border2);color:var(--text2);vertical-align:top;line-height:1.6;}
+.compare-table tr:nth-child(even) td{background:rgba(255,255,255,.02);}
+
+/* ── EXAM FORMAT ── */
+.exam-section{background:var(--card);border:1px solid var(--border2);border-radius:var(--r12);overflow:hidden;margin-bottom:1rem;}
+.exam-sec-head{display:flex;align-items:center;gap:.8rem;padding:1rem 1.3rem;background:rgba(200,168,75,.06);}
+.exam-sec-num{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--gold3),var(--gold));color:var(--ink);font-weight:900;font-size:.82rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.exam-sec-title{font-weight:700;color:var(--gold2);font-size:.92rem;}
+.exam-sec-body{padding:1rem 1.3rem;}
+.exam-sec-body p,.exam-sec-body li{color:var(--text2);font-size:.87rem;line-height:1.9;}
+.exam-sec-body ul{padding-right:1.1rem;}
+
+/* mobile */
+@media(max-width:768px){.main{padding:1rem;}}
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="splash-bg">
+    <div class="sb-line"></div><div class="sb-line"></div><div class="sb-line"></div>
+  </div>
+  <div class="splash-card">
+    <div class="splash-logo">مزيد</div>
+    <div class="splash-tagline">منصة مناهج البحث العلمي</div>
+    <div class="dr-badge">
+      <div class="dr-flag">
+        <div class="dr-icon">👩‍🏫</div>
+        <div>
+          <div class="dr-name">أ.د. رنا عبدالعال</div>
+          <div class="dr-rank">أستاذ دكتور — العلوم السياسية</div>
+        </div>
+      </div>
+      <div class="dr-roles">
+        <span class="dr-role">جامعة قناة السويس</span>
+        <span class="dr-role">الجامعة البريطانية</span>
+        <span class="dr-role">مجلس الاستراتيجية والأمن القومي</span>
+        <span class="dr-role">زميل كلية الدفاع الوطني</span>
+      </div>
+    </div>
+    <button class="splash-enter" onclick="enterApp()">ابدأ الدراسة ←</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div id="topbar">
+    <button class="tb-ham" onclick="toggleSidebar()">☰</button>
+    <div class="tb-logo" onclick="nav('home')">مزيد</div>
+    <div class="tb-dr"><strong>أ.د. رنا عبدالعال</strong>مناهج البحث العلمي — العلوم السياسية</div>
+  </div>
+  <div class="layout">
+    <nav id="sidebar">
+      <div class="nav-sec">الرئيسية</div>
+      <div class="nav-item active" onclick="nav('home')"><span class="ni">🏠</span>الصفحة الرئيسية</div>
+      <div class="nav-sec">المنهج</div>
+      <div class="nav-item" onclick="nav('chapters')"><span class="ni">📚</span>محاضرات المنهج</div>
+      <div class="nav-item" onclick="nav('flashcards')"><span class="ni">🃏</span>بطاقات التذكير</div>
+      <div class="nav-item" onclick="nav('style')"><span class="ni">🔍</span>أسلوب الدكتورة</div>
+      <div class="nav-item" onclick="nav('exam')"><span class="ni">📝</span>شكل الامتحان</div>
+      <div class="nav-sec">التدريب</div>
+      <div class="nav-item" onclick="nav('quiz')"><span class="ni">✅</span>اختيار من متعدد</div>
+      <div class="nav-item" onclick="nav('essay')"><span class="ni">✍️</span>أسئلة مقالية</div>
+      <div class="nav-item" onclick="nav('truefalse')"><span class="ni">⚖️</span>صح وخطأ</div>
+      <div class="nav-item" onclick="nav('studies')"><span class="ni">🔭</span>كيفية عمل الدراسات</div>
+      <div class="nav-sec">الأدوات</div>
+      <div class="nav-item" onclick="nav('notes')"><span class="ni">📝</span>ملاحظاتي</div>
+      <div class="nav-item" onclick="nav('uploads')"><span class="ni">📤</span>رفع المحاضرات</div>
+      <div class="nav-item" onclick="nav('videos')"><span class="ni">🎬</span>روابط الشرح</div>
+    </nav>
+
+    <main class="main">
+
+<!-- ══════════════ HOME ══════════════ -->
+<div class="page on" id="page-home">
+  <div class="ph">
+    <div class="ph-title">أهلاً بك في مزيد 🎓</div>
+    <div class="ph-sub">المنصة الشاملة لمنهج مناهج البحث — أ.د. رنا عبدالعال</div>
+  </div>
+  <div class="card" style="background:linear-gradient(145deg,var(--card),#1a2840);border-color:rgba(200,168,75,.22);margin-bottom:1.4rem;">
+    <div style="display:flex;align-items:flex-start;gap:1.2rem;flex-wrap:wrap;">
+      <div style="font-size:2.8rem;flex-shrink:0;">👩‍🏫</div>
+      <div style="flex:1;min-width:220px;">
+        <div style="font-family:Cairo,sans-serif;font-size:1.2rem;font-weight:700;color:var(--gold2);margin-bottom:.4rem;">أ.د. رنا عبدالعال</div>
+        <div style="color:var(--text2);font-size:.86rem;line-height:1.9;">
+          أستاذ دكتور في العلوم السياسية، تدرّس مادة مناهج البحث العلمي في جامعة قناة السويس والجامعة البريطانية في مصر. عضو المجلس الاستشاري لمجلس الاستراتيجية والأمن القومي، وزميل كلية الدفاع الوطني. تتميز بتخصصها في تحليل الأزمات السياسية والعلاقات الدولية.
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.7rem;">
+          <span class="tag tg">جامعة قناة السويس</span>
+          <span class="tag tb">الجامعة البريطانية</span>
+          <span class="tag tg2">الأمن القومي</span>
+          <span class="tag to">كلية الدفاع الوطني</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="g3" style="margin-bottom:1.4rem;">
+    <div class="stat" onclick="nav('chapters')"><div class="stat-n">10</div><div class="stat-l">📚 محاضرات المنهج</div></div>
+    <div class="stat" onclick="nav('quiz')"><div class="stat-n">39+</div><div class="stat-l">✅ سؤال اختيار</div></div>
+    <div class="stat" onclick="nav('flashcards')"><div class="stat-n">32</div><div class="stat-l">🃏 بطاقة تذكير</div></div>
+  </div>
+  <div class="g2">
+    <div class="card">
+      <div class="card-h">⚡ وصول سريع</div>
+      <div style="display:flex;flex-direction:column;gap:.5rem;">
+        <button class="btn btn-o" style="width:100%;text-align:right;" onclick="nav('quiz')">🎯 ابدأ اختباراً الآن</button>
+        <button class="btn btn-o" style="width:100%;text-align:right;" onclick="nav('truefalse')">⚖️ أسئلة صح وخطأ</button>
+        <button class="btn btn-o" style="width:100%;text-align:right;" onclick="nav('flashcards')">🃏 مراجعة البطاقات</button>
+        <button class="btn btn-o" style="width:100%;text-align:right;" onclick="nav('exam')">📝 شكل ورقة الامتحان</button>
+        <button class="btn btn-o" style="width:100%;text-align:right;" onclick="nav('studies')">🔭 كيف أبني خطة البحث؟</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-h">📌 أهم ما يتكرر في الامتحان</div>
+      <div style="display:flex;flex-direction:column;gap:.45rem;">
+        <div class="hl">🔑 الفرق بين المشكلة البحثية وأسئلة البحث</div>
+        <div class="hl hl-b">🔑 شروط صياغة المشكلة البحثية والعنوان</div>
+        <div class="hl hl-g">🔑 أنواع الأسئلة البحثية الأربعة</div>
+        <div class="hl" style="border-right-color:var(--orange);background:rgba(232,144,80,.07);color:var(--orange);">🔑 المتغيرات وأنواعها (مستقل/تابع/وسيط/معدل)</div>
+        <div class="hl" style="border-right-color:var(--silver);background:rgba(140,170,200,.07);color:var(--silver2);">🔑 الفرق بين الأزمة والكارثة</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ CHAPTERS ══════════════ -->
+<div class="page" id="page-chapters">
+  <div class="ph"><div class="ph-title">📚 محاضرات المنهج</div><div class="ph-sub">شرح تفصيلي لجميع محاضرات مناهج البحث — أ.د. رنا عبدالعال</div></div>
+  <div class="search-bar"><span style="color:var(--text2)">🔍</span><input type="text" placeholder="ابحث في المحاضرات..." oninput="filterChapters(this.value)" id="chSearch"></div>
+  <div id="chList"></div>
+</div>
+
+<!-- ══════════════ FLASHCARDS ══════════════ -->
+<div class="page" id="page-flashcards">
+  <div class="ph"><div class="ph-title">🃏 بطاقات التذكير</div><div class="ph-sub">انقر على البطاقة لإظهار الإجابة</div></div>
+  <div class="filt-row" id="fcFilt">
+    <button class="filt-btn active" onclick="filtFC('all',this)">الكل</button>
+    <button class="filt-btn" onclick="filtFC('مفاهيم',this)">مفاهيم</button>
+    <button class="filt-btn" onclick="filtFC('متغيرات',this)">متغيرات</button>
+    <button class="filt-btn" onclick="filtFC('أزمات',this)">أزمات</button>
+    <button class="filt-btn" onclick="filtFC('أدوات',this)">أدوات</button>
+    <button class="filt-btn" onclick="filtFC('اقترابات',this)">اقترابات</button>
+    <button class="filt-btn" onclick="filtFC('فروق',this)">الفروق</button>
+  </div>
+  <div class="fc-grid" id="fcGrid"></div>
+</div>
+
+<!-- ══════════════ STYLE ══════════════ -->
+<div class="page" id="page-style">
+  <div class="ph"><div class="ph-title">🔍 أسلوب الدكتورة</div><div class="ph-sub">تحليل نمط التدريس والتقييم عند أ.د. رنا عبدالعال</div></div>
+  <div class="g2" style="margin-bottom:1.2rem;">
+    <div class="card">
+      <div class="card-h">🎓 طريقة التدريس</div>
+      <ul style="color:var(--text2);line-height:2.2;font-size:.87rem;padding-right:1.1rem;">
+        <li>تبدأ بالإشكالية الجدلية قبل الشرح النظري</li>
+        <li>تكثر من الأمثلة التطبيقية على الأزمات الدولية المعاصرة</li>
+        <li>تربط المفاهيم النظرية بحالات دراسية حقيقية (روسيا-أوكرانيا، غزة، BRICS)</li>
+        <li>تستخدم الجداول المقارنة لتوضيح الفروق</li>
+        <li>تطرح تساؤلات للنقاش في نهاية كل محاضرة</li>
+        <li>تعتمد على التحليل الاستراتيجي ورسم خرائط المتغيرات</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-h">🎯 ما يُركَّز عليه في الامتحانات</div>
+      <ul style="color:var(--text2);line-height:2.2;font-size:.87rem;padding-right:1.1rem;">
+        <li>التعريفات الدقيقة والمتكاملة</li>
+        <li>الفروق الجوهرية بين المفاهيم المتشابهة</li>
+        <li>استخراج المتغيرات من عناوين بحثية</li>
+        <li>تقييم عناوين الأبحاث وتحديد أخطائها</li>
+        <li>أسئلة صح/خطأ بتفاصيل دقيقة</li>
+        <li>سؤال إبداعي وسؤال عن التكليف الخاص</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:1.2rem;">
+    <div class="card-h">📋 شكل الورقة الامتحانية</div>
+    <div class="exam-section">
+      <div class="exam-sec-head"><div class="exam-sec-num">١</div><div class="exam-sec-title">القسم الأول — صح وخطأ</div></div>
+      <div class="exam-sec-body"><p>جمل وعبارات يُحدد فيها الطالب الصواب أو الخطأ مع التوقع بوجود تعليل أو تصحيح للخطأ.</p></div>
+    </div>
+    <div class="exam-section">
+      <div class="exam-sec-head"><div class="exam-sec-num">٢</div><div class="exam-sec-title">القسم الثاني — عناوين خاطئة واستخراج المتغيرات</div></div>
+      <div class="exam-sec-body"><p>مجموعة عناوين أبحاث خاطئة — يُطلب تصحيحها وتحديد أخطائها، ثم استخراج المتغيرات المستقلة والتابعة من عناوين صحيحة.</p></div>
+    </div>
+    <div class="exam-section">
+      <div class="exam-sec-head"><div class="exam-sec-num">٣</div><div class="exam-sec-title">القسم الثالث — سؤال إبداعي</div></div>
+      <div class="exam-sec-body"><p>سؤال يتطلب التفكير الناقد والتحليل الاستراتيجي — غالباً تحليل أزمة سياسية أو وضع سيناريوهات.</p></div>
+    </div>
+    <div class="exam-section">
+      <div class="exam-sec-head"><div class="exam-sec-num">٤</div><div class="exam-sec-title">القسم الرابع — التكليف الخاص</div></div>
+      <div class="exam-sec-body"><p>سؤال متعلق بالخطة البحثية الفردية للطالب — يُقيَّم على أساس الخطة المقدمة مسبقاً.</p></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-h">💡 مفاتيح الإجابة المثالية</div>
+    <div style="display:flex;flex-direction:column;gap:.6rem;">
+      <div class="hl">✅ في عناوين الأبحاث: ابحث دائماً عن غياب المتغيرات، النطاق الجغرافي، الإطار الزمني</div>
+      <div class="hl hl-b">✅ في المشكلة البحثية: تبدأ بـ"على الرغم من..." — هي الإشكالية الجدلية</div>
+      <div class="hl hl-g">✅ أسئلة البحث: لا تبدأ بـ"هل" — تتنوع بين ما/ماذا/كيف/إلى أي مدى</div>
+      <div class="hl" style="border-right-color:var(--orange);background:rgba(232,144,80,.07);color:var(--orange);">✅ الخطة البحثية: اختمها بالجدول الذي يربط الأهداف بالأسئلة والأدوات</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ EXAM ══════════════ -->
+<div class="page" id="page-exam">
+  <div class="ph"><div class="ph-title">📝 شكل الامتحان</div><div class="ph-sub">هيكل ورقة الامتحان وكيفية الإجابة — من محاضرة المراجعة النهائية</div></div>
+  <div id="examContent"></div>
+</div>
+
+<!-- ══════════════ QUIZ ══════════════ -->
+<div class="page" id="page-quiz">
+  <div class="ph"><div class="ph-title">✅ اختيار من متعدد</div><div class="ph-sub">بنك أسئلة مستخرج من محاضرات الدكتورة — مع تعليل كل إجابة</div></div>
+  <div class="filt-row" id="qzTopics">
+    <button class="filt-btn active" onclick="loadQuiz('all',this)">الكل</button>
+    <button class="filt-btn" onclick="loadQuiz('مشكلة',this)">المشكلة والعنوان</button>
+    <button class="filt-btn" onclick="loadQuiz('متغيرات',this)">المتغيرات والفروض</button>
+    <button class="filt-btn" onclick="loadQuiz('أزمات',this)">الأزمات السياسية</button>
+    <button class="filt-btn" onclick="loadQuiz('أدوات',this)">أدوات البحث</button>
+    <button class="filt-btn" onclick="loadQuiz('اقترابات',this)">الاقترابات</button>
+  </div>
+  <div class="qz-wrap" id="quizContainer"></div>
+</div>
+
+<!-- ══════════════ ESSAY ══════════════ -->
+<div class="page" id="page-essay">
+  <div class="ph"><div class="ph-title">✍️ الأسئلة المقالية</div><div class="ph-sub">أسئلة تحليلية وإبداعية بالإجابات النموذجية</div></div>
+  <div class="filt-row" id="essFilt">
+    <button class="filt-btn active" onclick="filtEss('all',this)">الكل</button>
+    <button class="filt-btn" onclick="filtEss('تعريف',this)">تعريف وشرح</button>
+    <button class="filt-btn" onclick="filtEss('مقارنة',this)">مقارنة وفروق</button>
+    <button class="filt-btn" onclick="filtEss('تطبيق',this)">تطبيق عملي</button>
+    <button class="filt-btn" onclick="filtEss('تقييم',this)">تقييم عناوين</button>
+  </div>
+  <div id="essList"></div>
+</div>
+
+<!-- ══════════════ TRUE/FALSE ══════════════ -->
+<div class="page" id="page-truefalse">
+  <div class="ph"><div class="ph-title">⚖️ صح وخطأ</div><div class="ph-sub">مستخرجة من بنك أسئلة محاضرة المراجعة النهائية للدكتورة</div></div>
+  <div class="filt-row" id="tfFilt">
+    <button class="filt-btn active" onclick="filtTF('all',this)">الكل</button>
+    <button class="filt-btn" onclick="filtTF('مفاهيم',this)">مفاهيم البحث</button>
+    <button class="filt-btn" onclick="filtTF('متغيرات',this)">المتغيرات</button>
+    <button class="filt-btn" onclick="filtTF('مناهج',this)">المناهج</button>
+    <button class="filt-btn" onclick="filtTF('أزمات',this)">إدارة الأزمات</button>
+  </div>
+  <div id="tfList"></div>
+</div>
+
+<!-- ══════════════ STUDIES ══════════════ -->
+<div class="page" id="page-studies">
+  <div class="ph"><div class="ph-title">🔭 كيفية عمل الدراسات</div><div class="ph-sub">خطوات إعداد الخطة البحثية الفردية — طبقاً لمنهج أ.د. رنا عبدالعال</div></div>
+  <div class="card" style="margin-bottom:1.2rem;">
+    <div class="card-h">📋 مكونات الخطة البحثية الفردية</div>
+    <div id="studiesSteps"></div>
+  </div>
+  <div class="card" style="margin-bottom:1.2rem;">
+    <div class="card-h">⚠️ أخطاء العناوين البحثية — من محاضرة المراجعة</div>
+    <div id="titleErrors"></div>
+  </div>
+  <div class="g2">
+    <div class="card">
+      <div class="card-h">📐 نماذج الأسئلة البحثية الأربعة</div>
+      <div style="display:flex;flex-direction:column;gap:.5rem;">
+        <div class="style-box"><div class="style-box-h" style="color:var(--gold2);">الاستكشافي</div><div style="color:var(--text2);font-size:.83rem;">محاولة فهم أو إيضاح الظاهرة المدروسة</div></div>
+        <div class="style-box"><div class="style-box-h" style="color:var(--silver2);">الوصفي</div><div style="color:var(--text2);font-size:.83rem;">قياس الأبعاد الكمية: ما مقدار؟ كم النسبة؟</div></div>
+        <div class="style-box"><div class="style-box-h" style="color:var(--orange);">التفسيري</div><div style="color:var(--text2);font-size:.83rem;">البحث عن الأسباب والنتائج: لماذا؟</div></div>
+        <div class="style-box"><div class="style-box-h" style="color:var(--green);">التقييمي</div><div style="color:var(--text2);font-size:.83rem;">قيمة الأثر المترتب — يُنتج توصيات</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-h">✅ شروط الخطة البحثية الناجحة</div>
+      <ul style="color:var(--text2);line-height:2.2;font-size:.86rem;padding-right:1.1rem;">
+        <li>الإشكالية تبدأ بـ"على الرغم من..."</li>
+        <li>التساؤلات لا تبدأ بـ"هل"</li>
+        <li>لا تخلط التعريفات بالإشكالية</li>
+        <li>لا تتجاوز على التساؤلات في الإشكالية</li>
+        <li>لا تُغفل التسلسل الزمني والمنطقي</li>
+        <li>اختم بجدول يربط الأهداف بالأسئلة والأدوات</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ NOTES ══════════════ -->
+<div class="page" id="page-notes">
+  <div class="ph"><div class="ph-title">📝 ملاحظاتي</div><div class="ph-sub">دوّن ملاحظاتك — تُحفظ تلقائياً</div></div>
+  <div class="card" style="margin-bottom:1.2rem;">
+    <div class="card-h">➕ إضافة ملاحظة</div>
+    <div class="fl"><label>الموضوع</label>
+    <select id="noteTopic">
+      <option>المشكلة البحثية والعنوان</option><option>المتغيرات والفروض</option><option>أنواع الأسئلة البحثية</option><option>الاقترابات</option><option>الأزمات السياسية</option><option>أدوات البحث</option><option>الإطار النظري والمفاهيمي</option><option>الدراسات السابقة</option><option>الخطة البحثية</option><option>عام</option>
+    </select></div>
+    <div class="fl"><label>الملاحظة</label><textarea id="noteTxt" placeholder="اكتب ملاحظتك هنا..."></textarea></div>
+    <button class="btn btn-g" onclick="saveNote()">💾 حفظ</button>
+  </div>
+  <div class="card-h" style="color:var(--gold2);margin-bottom:.8rem;">📋 الملاحظات المحفوظة <span id="notesCnt" class="badge">0</span></div>
+  <div style="display:flex;flex-direction:column;gap:.7rem;" id="notesList"><div style="text-align:center;color:var(--text2);padding:2rem;font-size:.88rem;">لا توجد ملاحظات بعد</div></div>
+</div>
+
+<!-- ══════════════ UPLOADS ══════════════ -->
+<div class="page" id="page-uploads">
+  <div class="ph"><div class="ph-title">📤 رفع المحاضرات</div><div class="ph-sub">ارفع الملفات لتنظيمها مع المنهج</div></div>
+  <div class="card" style="margin-bottom:1.2rem;">
+    <div class="upload-zone" id="upZone" onclick="document.getElementById('fileIn').click()" ondragover="e=>{e.preventDefault();document.getElementById('upZone').classList.add('drag')}" ondragleave="document.getElementById('upZone').classList.remove('drag')" ondrop="dropF(event)">
+      <div style="font-size:2rem;margin-bottom:.6rem;">📁</div>
+      <div style="color:var(--text2);font-size:.88rem;"><strong style="color:var(--gold2);">اسحب الملفات أو انقر للاختيار</strong><br>PDF, Word, PowerPoint, صور</div>
+    </div>
+    <input type="file" id="fileIn" style="display:none" multiple accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.png,.jpeg" onchange="handleFiles(this.files)">
+    <div class="fl" style="margin-top:.8rem;"><label>موضوع الملف</label>
+    <select id="fileTopicSel"><option>المشكلة البحثية</option><option>المتغيرات</option><option>الاقترابات</option><option>الأزمات السياسية</option><option>أدوات البحث</option><option>الإطار النظري</option></select></div>
+  </div>
+  <div class="card-h" style="color:var(--gold2);margin-bottom:.8rem;">📂 الملفات المرفوعة <span id="filesCnt" class="badge">0</span></div>
+  <div style="display:flex;flex-direction:column;gap:.6rem;" id="fileList"><div style="text-align:center;color:var(--text2);padding:2rem;font-size:.88rem;">لا توجد ملفات</div></div>
+</div>
+
+<!-- ══════════════ VIDEOS ══════════════ -->
+<div class="page" id="page-videos">
+  <div class="ph"><div class="ph-title">🎬 روابط الشرح</div><div class="ph-sub">أضف روابط شرح لمواضيع المنهج</div></div>
+  <div class="card" style="margin-bottom:1.2rem;">
+    <div class="card-h">➕ إضافة رابط</div>
+    <div class="fl"><label>الموضوع</label><select id="vidTopic"><option>المشكلة البحثية</option><option>المتغيرات</option><option>الاقترابات</option><option>الأزمات</option><option>أدوات البحث</option></select></div>
+    <div class="fl"><label>العنوان</label><input type="text" id="vidTitle" placeholder="عنوان الشرح"></div>
+    <div class="fl"><label>الرابط</label><input type="url" id="vidUrl" placeholder="https://www.youtube.com/watch?v=..."></div>
+    <button class="btn btn-g" onclick="addVid()">➕ إضافة</button>
+  </div>
+  <div class="card-h" style="color:var(--gold2);margin-bottom:.8rem;">📹 الروابط المحفوظة</div>
+  <div style="display:flex;flex-direction:column;gap:.6rem;" id="vidList"><div style="text-align:center;color:var(--text2);padding:2rem;font-size:.88rem;">لا توجد روابط</div></div>
+</div>
+
+    </main>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════ DATA ══════════════
+
+const chapters = [
+  {n:1,title:"المحاضرة 1-2: المشكلة البحثية — اللغز البحثي",tags:["مشكلة","عنوان"],body:`
+    <h4>أهداف البحث العلمي الخمسة:</h4>
+    <ul><li>توصيف الظاهرة (ماذا حدث؟)</li><li>تفسير الظاهرة (لماذا حدثت؟)</li><li>تحليل الظاهرة (كيف وبأي طريقة؟)</li><li>تقييم وتقويم الظاهرة</li><li>التنبؤ ورسم المستقبل (ماذا يحدث مستقبلاً؟)</li></ul>
+    <h4>أبرز مشكلات العلوم الاجتماعية:</h4>
+    <ul><li>صعوبة القابلية للتجريب أو إعادة التكرار</li><li>إشكالية التعميم (تأثر بالخصوصيات الثقافية)</li><li>إشكالية القيم (العلوم الطبيعية خالية من القيم)</li><li>إشكالية القدرة على التنبؤ</li></ul>
+    <div class="hl">العلم بمنهجه وليس بموضوعه — لا توجد ظاهرة علمية وأخرى غير علمية</div>
+    <h4>شروط العنوان الجيد:</h4>
+    <ul><li>الوضوح والاختصار</li><li>أن يكون معبراً عن الموضوع</li><li>أن يشتمل على متغيري الدراسة (المستقل/التابع)</li><li>أن يتضمن فترة زمنية قدر الإمكان</li><li>أن يكون خالياً من القيم والتحيزات</li><li>عدد بسيط من حروف الجر والعطف</li></ul>
+    <h4>طريقتا صياغة المشكلة:</h4>
+    <ul><li><strong>بعبارة لفظية تقديرية:</strong> أثر العوامل النفسية على رؤية بوتين السياسية...</li><li><strong>بسؤال أو أكثر:</strong> ما أثر العوامل النفسية على رؤية بوتين السياسية...؟</li></ul>
+    <h4>معايير صياغة المشكلة:</h4>
+    <ul><li>صياغة محددة أو سؤال واضح</li><li>تحديد علاقة بين متغيرين أو أكثر</li><li>تحديد المنطقة الجغرافية للدراسة</li><li>توافق المتغيرات مع أدوات الدراسة</li><li>قابلية المشكلة للبحث</li></ul>
+    <h4>الفرق بين المشكلة البحثية وأسئلة البحث:</h4>
+    <table><tr><th>وجه المقارنة</th><th>أسئلة البحث</th><th>مشكلة البحث</th></tr>
+    <tr><td>التعريف</td><td>السؤال الذي يجيب عليه الباحث</td><td>الجملة التي توصف العلاقة بين المتغيرات</td></tr>
+    <tr><td>الطبيعة</td><td>جملة استفهامية</td><td>جملة افتراضية/بيانية</td></tr>
+    <tr><td>الأخطاء الشائعة</td><td>لا تستخدم "هل" — لا تجاوب على التساؤلات في الإشكالية</td><td>لا تحول المشكلة إلى سؤال — لا تخلط التعريفات بالإشكالية</td></tr></table>
+    <h4>أنواع الأسئلة البحثية:</h4>
+    <ul><li><strong>الاستكشافي:</strong> محاولة فهم أو إيضاح الظاهرة</li><li><strong>الوصفي:</strong> قياس الأبعاد الكمية (مقدار — حجم — نسبة)</li><li><strong>التفسيري:</strong> البحث عن الأسباب والنتائج (لماذا؟)</li><li><strong>التقييمي:</strong> قيمة الأثر المترتب — يُنتج توصيات</li></ul>
+    <div class="hl hl-b">أسئلة البحث لا تبدأ بـ"هل" لأن إجابتها تكون بنعم أو لا فقط دون قيمة بحثية</div>
+  `},
+  {n:2,title:"المحاضرة 3: المتغيرات وكيفية ضبطها",tags:["متغيرات"],body:`
+    <h4>أنواع المتغيرات:</h4>
+    <ul>
+      <li><strong>المتغير المستقل (IV):</strong> أحد المتغيرات المحتمل أن تؤثر على الظاهرة</li>
+      <li><strong>المتغير التابع (DV):</strong> الظاهرة التي نسعى لتفسيرها</li>
+      <li><strong>المتغير الوسيط (Mediator):</strong> يصل بين السبب والنتيجة (لماذا وكيف)</li>
+      <li><strong>المتغير المعدل (Moderator):</strong> يؤثر على العلاقة بين المتغيرين (طردية/عكسية)</li>
+      <li><strong>المتغير المسبب (Incident):</strong> يسبق المتغير المستقل</li>
+    </ul>
+    <h4>صفات المتغير المستقل الثلاث:</h4>
+    <ul><li>قد يكون حدثاً داخلياً أو دولياً يؤثر في الظاهرة السياسية (مثل أحداث 11 سبتمبر)</li><li>قد يقبل التغيير في النمط (أحادي - ثنائي - متعدد)</li><li>أن يقبل المتغير المستقل تغيراً في قيمه (يتحول إجرائياً)</li></ul>
+    <h4>التعريف الإجرائي:</h4>
+    <p>تحويل المفهوم إلى عدد من المؤشرات القابلة للقياس ومن خلالها يتم وضع الفروض العلمية.</p>
+    <div class="hl">المؤشرات يجب أن تتميز: بالكفاية — الصدق — الاختلاف لكل متغير — الثبات</div>
+    <h4>المتغيرات الهيكلية في الأزمات السياسية (مثال):</h4>
+    <ul><li>نظام الحكم (ديمقراطي/سلطوي/هجين)</li><li>التحالفات والتعبئة الدولية</li><li>الموارد الاقتصادية</li><li>القيادة السياسية والخطاب</li></ul>
+    <div class="hl hl-b">بعد العنوان نصيغ التساؤل الرئيسي (ما تأثير س على ص؟)، ومنه عدد من التساؤلات الفرعية وفقاً للتعريف الإجرائي للمفهوم</div>
+  `},
+  {n:3,title:"المحاضرة 4: مؤشرات قياس الأزمات السياسية",tags:["أزمات","مؤشرات"],body:`
+    <h4>المؤشرات المؤسسية والهيكلية:</h4>
+    <ul><li>استقرار المؤسسات الحكومية وقدرتها على أداء وظائفها</li><li>فعالية آليات صنع القرار (انسجام أم انقسام؟)</li><li>شرعية النظام السياسي (قبول شعبي — اعتراف دولي)</li></ul>
+    <h4>المؤشرات الأمنية:</h4>
+    <ul><li>مستوى العنف والمواجهات (من المظاهرات إلى العنف المسلح)</li><li>تدخل القوات الأمنية والعسكرية</li><li>وجود تهديدات بالانقلاب أو التمرد</li></ul>
+    <h4>المؤشرات الاقتصادية والاجتماعية:</h4>
+    <ul><li>انهيار العملة، التضخم، انخفاض النمو</li><li>القدرة على توفير الخدمات الأساسية</li><li>حركة النزوح الداخلي أو الهجرة الخارجية</li></ul>
+    <h4>مؤشرات التواصل والحوار:</h4>
+    <ul><li>وجود أو انعدام قنوات اتصال بين الأطراف</li><li>استعداد الأطراف للتفاوض أو التصعيد</li><li>نجاح أو فشل مبادرات الوساطة</li></ul>
+    <div class="hl">3 خصائص أساسية للأزمة: التهديد — ضيق الوقت — المفاجأة</div>
+  `},
+  {n:4,title:"المحاضرة 5: أنواع الأزمات وأبعادها — الدراسات السابقة",tags:["أزمات","دراسات سابقة"],body:`
+    <h4>أبعاد الأزمة:</h4>
+    <ul>
+      <li><strong>مسببات الأزمة:</strong> أعمال عدائية خارجية/داخلية — كوارث طبيعية أو من صنع الإنسان</li>
+      <li><strong>ثقل الأزمة:</strong> مدى تهديدها للقيم الأساسية للدولة</li>
+      <li><strong>التعقيد/التشابك:</strong> غموض الأزمة وعدم وضوح أطرافها</li>
+      <li><strong>الحدة:</strong> حجم الضغوط التي تتطلب رد فعل سريع</li>
+      <li><strong>مدة الأزمة:</strong> قصيرة (1-6 أيام) — متوسطة (أسبوع-3 أشهر) — طويلة (حتى 6 أشهر) — ممتدة (أكثر من 6 أشهر)</li>
+    </ul>
+    <h4>الفرق بين الأزمة والكارثة:</h4>
+    <table><tr><th>العنصر</th><th>الأزمة</th><th>الكارثة</th></tr>
+    <tr><td>المفاجأة</td><td>مفاجأة تصاعدية</td><td>مفاجأة كاملة</td></tr>
+    <tr><td>التهديد</td><td>تمثل أعلى تهديد للمصالح الحيوية</td><td>قد لا تؤثر على المصالح الحيوية</td></tr>
+    <tr><td>الخسائر</td><td>قد يصاحبها خسائر محدودة</td><td>خسائر بشرية ومادية كبيرة</td></tr>
+    <tr><td>التدخل</td><td>يمكن التدخل ورفع التهديد عبر التفاوض</td><td>لا يمكن التدخل لكن يمكن التخفيف من آثارها</td></tr></table>
+    <h4>مراحل تطور الأزمة (5 مراحل):</h4>
+    <ul><li>مرحلة الميلاد</li><li>مرحلة النمو والاتساع</li><li>مرحلة النضج (قمة الأزمة)</li><li>مرحلة الانحسار والتقلص</li><li>مرحلة الاختفاء والتلاشي</li></ul>
+    <h4>هيكل استعراض الدراسات السابقة:</h4>
+    <ul><li>الدراسات العربية التي تناولت محور المتغير المستقل</li><li>الدراسات الأجنبية التي تناولت محور المتغير المستقل</li><li>الدراسات العربية للمتغير التابع</li><li>الدراسات الأجنبية للمتغير التابع</li><li>أوجه الاتفاق والاختلاف</li><li>الفجوة العلمية</li></ul>
+    <div class="hl hl-b">الفجوة البحثية تعني تحديد ما لم تتناوله الدراسات السابقة — وليس غياب أي دراسات سابقة</div>
+  `},
+  {n:5,title:"المحاضرة 6-7: الإطار النظري والمفاهيمي",tags:["إطار نظري"],body:`
+    <h4>الإطار المفاهيمي — تعريفه:</h4>
+    <p>نظام مفاهيمي يوضح العلاقات المتوقعة بين المتغيرات الرئيسية. يعمل كخريطة ذهنية ومنهجية توجه البحث.</p>
+    <h4>مكوناته الرئيسية:</h4>
+    <ul><li>المفاهيم الأساسية: المصطلحات الرئيسية</li><li>المتغيرات: المستقلة والتابعة والوسيطة</li><li>العلاقات المفترضة: كيفية ارتباط المفاهيم</li><li>الافتراضات النظرية: الأساس الفكري</li></ul>
+    <h4>الفرق بين الإطار المفاهيمي والنظري:</h4>
+    <ul><li><strong>الإطار النظري:</strong> يعتمد على نظريات قائمة تم اختبارها مسبقاً</li><li><strong>الإطار المفاهيمي:</strong> قد يكون مبنياً على نظرية أو بناء خاص بالباحث</li></ul>
+    <h4>خطوات بناء الإطار المفاهيمي:</h4>
+    <ul><li>الخطوة 1: مراجعة الأدبيات — تحديد المفاهيم والثغرات</li><li>الخطوة 2: تحديد المتغيرات (مستقل/تابع/وسيط/معدل)</li><li>الخطوة 3: تحديد العلاقات وصياغة فروض واضحة</li><li>الخطوة 4: التمثيل البصري بنموذج بياني مع الأسهم</li></ul>
+    <h4>مقارنة النظريات الرئيسية في العلاقات الدولية:</h4>
+    <table><tr><th>المعيار</th><th>الواقعية</th><th>الليبرالية</th><th>البنائية</th></tr>
+    <tr><td>العامل المحوري</td><td>القوة والمصلحة الوطنية</td><td>المصالح المشتركة والتعاون</td><td>الأفكار والمعاني المشتركة</td></tr>
+    <tr><td>النظام الدولي</td><td>فوضى تنافسية</td><td>فوضى قابلة للإدارة</td><td>الفوضى ما تصنعه الدول</td></tr>
+    <tr><td>الدافع الرئيسي</td><td>البقاء والهيمنة</td><td>تعظيم المنفعة المتبادلة</td><td>حماية الهوية والقيم</td></tr>
+    <tr><td>الصراع</td><td>حتمي ومتكرر</td><td>قابل للتفادي</td><td>ليس حتمياً</td></tr></table>
+  `},
+  {n:6,title:"المحاضرة 8: الإطار النظري للبحوث — القوة والدبلوماسية",tags:["إطار نظري","قوة"],body:`
+    <h4>مفهوم القوة الشاملة للدولة:</h4>
+    <p>قدرة الدولة على استخدام كل مواردها الملموسة وغير الملموسة بطريقة تؤثر على سلوك الدول الأخرى.</p>
+    <h4>أنواع القوة:</h4>
+    <ul>
+      <li><strong>القوة الصلبة:</strong> الطرق العسكرية والاقتصادية كمؤثر — تتم بالإكراه</li>
+      <li><strong>القوة الناعمة:</strong> القدرة على التأثير بالجذب (ثقافة — تعليم — دبلوماسية)</li>
+      <li><strong>القوة الذكية:</strong> الجمع بين الصلبة والناعمة</li>
+      <li><strong>القوة الحادة (Sharp Power):</strong> استهداف النماذج الديمقراطية واختراقها — للدول السلطوية</li>
+      <li><strong>القوة الحيوية (Vital Power):</strong> ظهرت بعد كورونا — مرتبطة بالطب والتكنولوجيا الحيوية</li>
+    </ul>
+    <h4>معادلة القوة الشاملة:</h4>
+    <div class="hl">ق = (ص + ع + ك) × (س + ب + ن + ت + م) ÷ 5<br>ص=اقتصادية، ع=عسكرية، ك=كتلة حيوية، س=سياسية، ب=دبلوماسية، ن=معنوية، ت=تكنولوجية، م=إعلامية</div>
+    <h4>محددات السياسة الخارجية الداخلية:</h4>
+    <ul><li>الجغرافية — الموارد الطبيعية — البشرية</li><li>شخصية صانع القرار</li><li>المحددات المجتمعية (شخصية قومية — أحزاب — رأي عام)</li><li>الاستقرار السياسي — القدرة العسكرية</li></ul>
+    <h4>أنواع الدبلوماسية:</h4>
+    <ul><li>من حيث الأطراف: ثنائية — متعددة الأطراف</li><li>من حيث الجهة: دبلوماسية القمة — المبعوثين — الشعبية</li><li>من حيث الموضوعات: تحالفات — اقتصادية — ثقافية — أزمات</li><li>من حيث السرعة: دبلوماسية المكوك — الهادئة</li></ul>
+  `},
+  {n:7,title:"المحاضرة 9: المناهج — الاقترابات",tags:["اقترابات"],body:`
+    <h4>الفرق الأساسي:</h4>
+    <ul>
+      <li><strong>المنهج:</strong> الطريقة المستخدمة في دراسة الظواهر (علمي/غير علمي)</li>
+      <li><strong>الاقتراب:</strong> اجتهادات بها عدد من المقولات في دراسة الظواهر — كل منهم لديه بؤرة تركيز</li>
+      <li><strong>الأسلوب:</strong> مستوى التحليل (دراسة الحالة — المقارنة)</li>
+      <li><strong>الأداة:</strong> ما يستخدم لجمع المادة العلمية أو تحليلها (تحليل المضمون — الاستبيان)</li>
+    </ul>
+    <h4>الاقتراب المؤسسي — المقولات:</h4>
+    <ul><li>النظم السياسية تختلف وفقاً لقوة المؤسسات داخلها</li><li>كل مؤسسة بها أعضاء يؤدون أدواراً مكملة</li><li>كافة المؤسسات عرضة لتغيير مستمر</li><li>أقوى مؤسسة هي الحكومة</li></ul>
+    <p><strong>معايير قوة المؤسسة عند هنتجتون:</strong> التكيف — التعقيد — الاستقلالية — التماسك</p>
+    <h4>اقتراب تحليل النظم (إيستون):</h4>
+    <ul><li>وحدة التحليل هي النظام (التفاعل بين وحدات معينة)</li><li>غاية النظام الأعلى: البقاء والاستمرار</li><li>نموذج المدخلات والمخرجات والتغذية العكسية</li><li>التغيير عند إيستون = التكيف (وليس الثورة)</li></ul>
+    <h4>البنائية الوظيفية (الموند):</h4>
+    <ul><li>وظائف المدخلات: التنشئة السياسية — التعبير عن المصالح — الاتصال</li><li>وظائف المخرجات: صنع القرار — التطبيق</li></ul>
+    <h4>منهج صنع القرار:</h4>
+    <ul><li>عملية صنع القرار أهم جوانب دراسة السياسة</li><li>الدولة = مجموعة من صانعي القرارات</li><li>الإطار: صانع القرار — البيئة — العملية — التقييم</li></ul>
+    <div class="hl hl-b">لا يوجد اقتراب أفضل من اقتراب — لكن هناك اقترابات أكثر ملاءمة لموضوع البحث</div>
+  `},
+  {n:8,title:"المحاضرة 10: أدوات البحث العلمي — الاستبيان والمقابلة",tags:["أدوات"],body:`
+    <h4>الاستبيان — تعريفه وأنواعه:</h4>
+    <ul>
+      <li><strong>المغلق:</strong> إجابات محددة (نعم/لا — موافق/معارض)</li>
+      <li><strong>المفتوح:</strong> إجابة حرة يعبر فيها المبحوث برأيه</li>
+      <li><strong>المغلق-المفتوح:</strong> يجمع بين النوعين</li>
+      <li><strong>انتخاب الإجابة:</strong> يوفر إجابات متوقعة للاختيار منها</li>
+      <li><strong>باستخدام الصور:</strong> للأطفال أو غير المؤهلين تعليمياً</li>
+    </ul>
+    <h4>خطوات إعداد الاستبيان:</h4>
+    <ul><li>تحديد نوع الاستبيان</li><li>اختيار أفراد عينة الدراسة</li><li>صياغة الفقرات والأسئلة</li><li>تحكيم الاستبيان (خبراء أو تجريبي)</li><li>تنفيذ الاستبيان (مباشر/بريد/إلكتروني)</li></ul>
+    <h4>شروط الاستبيان الجيد:</h4>
+    <ul><li>أسئلة واضحة وسهلة الفهم</li><li>الموضوعية وعدم التحيز</li><li>عدم الإطالة الزائدة</li><li>توضيح المصطلحات العلمية</li><li>مراعاة خصوصية المفحوصين</li><li>البداية بالأسئلة البسيطة (متغيرات ثابتة: العمر والجنس)</li></ul>
+    <h4>أنواع المقابلة:</h4>
+    <ul>
+      <li><strong>المنظمة:</strong> أسئلة محددة مسبقاً — الأكثر صرامة — تستخدم في البحوث المسحية</li>
+      <li><strong>شبه المنظمة:</strong> مرونة أكبر — الأكثر شيوعاً في البحث العلمي</li>
+      <li><strong>غير المنظمة:</strong> محادثة بهدف محدد — تبني الثقة</li>
+    </ul>
+    <div class="hl">مزايا الاستبيان: تكلفة منخفضة — بيانات ضخمة — سهولة التحليل | عيوبه: لا يرصد الانفعالات — خطر الإهمال</div>
+    <h4>الملاحظة وأنواعها:</h4>
+    <ul><li><strong>بالمشاركة:</strong> الباحث يندمج مع عينة الدراسة</li><li><strong>بدون مشاركة:</strong> الباحث مشاهد من الخارج</li></ul>
+  `},
+  {n:9,title:"المحاضرة الأخيرة: المراجعة النهائية — تشريح الأزمات",tags:["مراجعة","امتحان"],body:`
+    <h4>شكل ورقة الامتحان الأربعة أقسام:</h4>
+    <ul><li>القسم الأول: صح وخطأ</li><li>القسم الثاني: مجموعة عناوين خاطئة ويتم تصحيحها واستخراج المتغيرات منها</li><li>القسم الثالث: سؤال إبداعي</li><li>القسم الرابع: سؤال عن التكليف الخاص</li></ul>
+    <h4>أهم المعلومات للمراجعة:</h4>
+    <ul><li>لا توجد ظاهرة علمية وأخرى غير علمية — العلم بمنهجه وليس بموضوعه</li><li>العلوم الطبيعية: دقة — يقين — قوانين — تطبق في كل مكان وزمان</li><li>العلوم الاجتماعية: الإنسان طرف فيها — نصل إلى درجة من الاحتمالية</li></ul>
+    <h4>نماذج أسئلة العنوان الخاطئ:</h4>
+    <ul>
+      <li>"أثر الأزمات على الاستقرار السياسي في الشرق الأوسط" — خطأ: لا يحدد نوع الأزمات — المتغير المستقل غير واضح — نطاق جغرافي واسع — فترة زمنية غير محددة</li>
+      <li>"إدارة الأزمات في العالم المعاصر" — خطأ: واسع للغاية — لا يحتوي على متغيرات — لا يحدد حالة دراسية</li>
+      <li>"دور إدارة الأزمات في إدارة الأزمات السياسية" — خطأ: تكرار المفهوم نفسه</li>
+    </ul>
+    <h4>أنواع الفروض:</h4>
+    <ul>
+      <li><strong>العدمي:</strong> عدم وجود علاقة — الأقل استخداماً</li>
+      <li><strong>الارتباطي:</strong> علاقة غير محددة الاتجاه (الفروض العامة)</li>
+      <li><strong>الارتباطي المحدد:</strong> ذات اتجاه طردي أو عكسي</li>
+      <li><strong>السببي:</strong> علاقة سببية بين س وص (نادر في العلوم الاجتماعية)</li>
+    </ul>
+    <div class="hl">شروط الفرض: تجريبي — عام — محدد — منطقي — قابل للاختبار</div>
+  `}
+];
+
+const flashcards = [
+  {cat:"مفاهيم",q:"ما الفرق بين المنهج والاقتراب والأسلوب؟",a:"المنهج: طريقة الدراسة (علمي/غير علمي) | الاقتراب: اجتهادات بها مقولات في دراسة الظواهر | الأسلوب: مستوى التحليل (دراسة حالة — مقارنة)"},
+  {cat:"مفاهيم",q:"ما تعريف الاقتراب؟",a:"اجتهادات بها عدد من المقولات في دراسة الظواهر — كل منهم لديه بؤرة تركيز — وليس هناك اقتراب أفضل من اقتراب"},
+  {cat:"مفاهيم",q:"ما شروط الفرض العلمي الجيد؟",a:"تجريبي — عام (لا يتناول شخصاً/ظاهرة) — محدد (لا يحتمل علاقة بين أكثر من متغيرين) — منطقي — قابل للاختبار"},
+  {cat:"مفاهيم",q:"ما أنواع الأسئلة البحثية الأربعة؟",a:"الاستكشافي: فهم الظاهرة | الوصفي: قياس الأبعاد الكمية | التفسيري: الأسباب (لماذا؟) | التقييمي: قيمة الأثر ويُنتج توصيات"},
+  {cat:"مفاهيم",q:"لماذا لا تبدأ أسئلة البحث بـ'هل'؟",a:"لأن إجابتها تكون بنعم أو لا فقط — فهي لا تُبدي تفاصيل بحثية مهمة ولا تعطي صورة واضحة عن أبعاد الظاهرة"},
+  {cat:"مفاهيم",q:"ما أهداف البحث العلمي الخمسة؟",a:"١-التوصيف (ماذا؟) ٢-التفسير (لماذا؟) ٣-التحليل (كيف؟) ٤-التقييم والتقويم ٥-التنبؤ ورسم المستقبل"},
+  {cat:"متغيرات",q:"ما الفرق بين المتغير الوسيط والمعدل؟",a:"الوسيط (Mediator): يصل بين السبب والنتيجة — يجيب على لماذا وكيف | المعدل (Moderator): يؤثر على العلاقة بين المتغيرين — يحددها طردية أو عكسية"},
+  {cat:"متغيرات",q:"ما صفات المتغير المستقل الثلاث؟",a:"١-قد يكون حدثاً داخلياً أو دولياً يؤثر في الظاهرة ٢-قد يقبل التغيير في النمط (أحادي-ثنائي-متعدد) ٣-أن يقبل المتغير تغيراً في قيمه (يتحول إجرائياً)"},
+  {cat:"متغيرات",q:"ما التعريف الإجرائي؟",a:"تحويل المفهوم إلى عدد من المؤشرات القابلة للقياس — ومن خلالها يتم وضع الفروض العلمية"},
+  {cat:"متغيرات",q:"ما شروط المؤشرات الجيدة؟",a:"الكفاية — الصدق — الاختلاف (لكل متغير مؤشراته الخاصة) — الثبات"},
+  {cat:"متغيرات",q:"ما أنواع الفروض العلمية؟",a:"العدمي (لا علاقة) — الارتباطي العام (علاقة غير محددة الاتجاه) — الارتباطي المحدد (طردي/عكسي) — السببي (نادر في الاجتماعي)"},
+  {cat:"أزمات",q:"ما الخصائص الأساسية الثلاث للأزمة؟",a:"التهديد — ضيق الوقت — المفاجأة"},
+  {cat:"أزمات",q:"ما الفرق بين الأزمة والكارثة في نقطتين؟",a:"الأزمة: مفاجأة تصاعدية — يمكن التدخل فيها عبر التفاوض | الكارثة: مفاجأة كاملة — لا يمكن التدخل لكن يمكن التخفيف من آثارها"},
+  {cat:"أزمات",q:"ما مراحل دورة حياة الأزمة الخمس؟",a:"١-الميلاد ٢-النمو والاتساع ٣-النضج (قمة الأزمة) ٤-الانحسار والتقلص ٥-الاختفاء والتلاشي"},
+  {cat:"أزمات",q:"ما أسباب نشوء الأزمة الدولية؟",a:"سوء الفهم — سوء الإدراك — سوء التقدير — الإدارة العشوائية — الرغبة في الابتزاز — الكوارث — اليأس — الإشاعات — استعراض القوة — أخطاء بشرية — أزمات متعمدة"},
+  {cat:"أزمات",q:"ما الفرق بين إدارة الأزمة والإدارة بالأزمات؟",a:"إدارة الأزمة: سلسلة إجراءات لمجابهة أحداث فعلية | الإدارة بالأزمات: افتعال الأزمة وإيجادها كوسيلة لتحقيق أهداف معينة"},
+  {cat:"أدوات",q:"ما أنواع الاستبيان الخمسة؟",a:"المغلق — المفتوح — المغلق/المفتوح — انتخاب الإجابة — باستخدام الصور (للأطفال وغير المؤهلين)"},
+  {cat:"أدوات",q:"ما أنواع المقابلة الثلاثة؟",a:"المنظمة: أسئلة محددة مسبقاً (الأكثر صرامة) | شبه المنظمة: الأكثر شيوعاً | غير المنظمة: محادثة بهدف — تبني الثقة"},
+  {cat:"أدوات",q:"ما الفرق بين الملاحظة بالمشاركة وبدون مشاركة؟",a:"بالمشاركة: الباحث يندمج مع عينة الدراسة ويعيش بينهم | بدون مشاركة: الباحث مشاهد من الخارج يسجل الملاحظات دون تدخل"},
+  {cat:"اقترابات",q:"ما أهم مقولات اقتراب تحليل النظم عند إيستون؟",a:"وحدة التحليل هي النظام — غاية النظام البقاء — التغيير يرادف التكيف — نموذج المدخلات والمخرجات والتغذية العكسية — لا يصلح للتغيير الثوري"},
+  {cat:"اقترابات",q:"ما وظائف التحويل عند الموند؟",a:"وظائف المدخلات: التنشئة السياسية — التعبير عن المصالح — الاتصال | وظائف المخرجات: صنع القرار — التطبيق"},
+  {cat:"اقترابات",q:"ما معايير قوة المؤسسة عند هنتجتون؟",a:"التكيف (مع التغيرات البيئية) — التعقيد (تعدد الوظائف والوحدات) — الاستقلالية (الميزانية وشغل الوظائف) — التماسك (الرضا بين الأعضاء)"},
+  {cat:"فروق",q:"الفرق بين المشكلة البحثية وأسئلة البحث",a:"المشكلة: جملة بيانية/افتراضية توصف العلاقة بين المتغيرات | الأسئلة: جملة استفهامية يجيب عليها الباحث خلال البحث"},
+  {cat:"فروق",q:"الفرق بين الإطار النظري والمفاهيمي",a:"النظري: يعتمد على نظريات قائمة تم اختبارها مسبقاً | المفاهيمي: قد يكون بناء خاصاً بالباحث لفهم ظاهرة معينة"},
+  {cat:"فروق",q:"الفرق بين القوة الصلبة والناعمة والحادة",a:"الصلبة: إكراه عسكري/اقتصادي | الناعمة: جذب بالثقافة والدبلوماسية | الحادة: تأثير الدول السلطوية لاستهداف الديمقراطيات من الداخل"},
+  {cat:"فروق",q:"الفرق بين الواقعية والليبرالية والبنائية",a:"الواقعية: القوة والبقاء — الفوضى حتمية | الليبرالية: التعاون والمؤسسات — الصراع قابل للتفادي | البنائية: الأفكار والهوية تصنع الواقع"},
+  {cat:"مفاهيم",q:"ما شروط العنوان البحثي الجيد؟",a:"الوضوح — التعبير عن الموضوع — الاختصار — يشمل المتغيرين — يتضمن فترة زمنية — خالٍ من القيم والتحيزات — عدد بسيط من حروف الجر"},
+  {cat:"أزمات",q:"ما مدد الأزمة حسب التصنيف؟",a:"قصيرة: 1-6 أيام | متوسطة: أسبوع-3 أشهر | طويلة: حتى 6 أشهر | ممتدة: أكثر من 6 أشهر"},
+  {cat:"اقترابات",q:"ما الفرق بين المصالح المشتركة والمتعارضة؟",a:"المشتركة: ذات تأثير إيجابي متبادل — تتحرك السياسات في مسارات متوازية | المتعارضة: حصول طرف على مصالح يؤثر بصورة ضارة على الطرف الآخر"},
+  {cat:"متغيرات",q:"ما المتغير المسبب ويختلف عن المستقل كيف؟",a:"المتغير المسبب (Incident): يسبق المتغير المستقل ويُعد شرطاً مسبقاً له — بينما المستقل هو المتغير الذي يؤثر مباشرة في التابع"},
+  {cat:"أدوات",q:"ما أخطاء الباحث الشائعة في الاستبيان؟",a:"أسئلة معروفة الإجابة مسبقاً — أسئلة تبدأ بـ'هل' — استخدام الأسئلة المركبة — الأسئلة الطموحة غير الواقعية — الأسئلة غير المرتبطة بالموضوع"},
+  {cat:"فروق",q:"ما الفرق بين القوى الكبرى والقوى الفاعلة؟",a:"القوى الكبرى: تحددها القوة الشاملة فقط | القوى الفاعلة: القوة الشاملة + الإرادة السياسية لممارسة دور مؤثر عالمياً وفق رؤية واستراتيجية"}
+];
+
+const quizData = [
+  {t:"مشكلة",q:"أي من الآتي يمثل خطأً شائعاً في صياغة أسئلة البحث؟",opts:["التساؤل التفسيري (لماذا؟)","السؤال الذي يبدأ بـ'هل'","التساؤل الوصفي (كم النسبة؟)","التساؤل التقييمي"],ans:1,exp:"أسئلة البحث لا تبدأ بـ'هل' لأن إجابتها تكون بنعم أو لا فقط دون قيمة بحثية — لا تُبدي تفاصيل مهمة."},
+  {t:"مشكلة",q:"الإشكالية البحثية عند أ.د. رنا عادةً تبدأ بـ:",opts:["ما أثر...","هل يؤثر...","على الرغم من...","كيف يمكن..."],ans:2,exp:"الإشكالية البحثية هي اللغز الجدلي — تبدأ بـ'على الرغم من...' لتوضيح التناقض أو الفجوة التي تدفع للبحث."},
+  {t:"مشكلة",q:"أي من العناوين التالية يُعد جيداً وفق معايير الدكتورة؟",opts:["إدارة الأزمات في العالم","أثر القوة العسكرية لروسيا على مسار الأزمة الأوكرانية 2022-2024","الأزمات السياسية الدولية","إدارة الأزمات في عصرنا الحديث"],ans:1,exp:"العنوان الجيد يحتوي على متغيرين (القوة العسكرية = مستقل / مسار الأزمة = تابع) + تحديد جغرافي + إطار زمني."},
+  {t:"مشكلة",q:"ما الهدف من مراجعة الأدبيات والدراسات السابقة؟",opts:["زيادة عدد صفحات البحث","معرفة الدراسات السابقة وتحديد الفجوة البحثية","جمع البيانات الأولية","كتابة الإطار النظري مباشرة"],ans:1,exp:"مراجعة الأدبيات تهدف لتحديد الفجوة البحثية — أي ما لم يتناوله الباحثون السابقون والجديد الذي تضيفه دراستك."},
+  {t:"متغيرات",q:"المتغير الذي يصل بين السبب والنتيجة ويجيب على 'لماذا وكيف' يسمى:",opts:["المتغير المعدل","المتغير المسبب","المتغير الوسيط","المتغير التابع"],ans:2,exp:"المتغير الوسيط (Mediator) يصل بين المتغير المستقل والتابع ويشرح الآلية التي يحدث من خلالها التأثير."},
+  {t:"متغيرات",q:"المتغير الذي يؤثر على طبيعة العلاقة بين متغيرين آخرين (طردية/عكسية) يسمى:",opts:["الوسيط","المعدل","المسبب","التابع"],ans:1,exp:"المتغير المعدل (Moderator) يؤثر على قوة أو اتجاه العلاقة بين المستقل والتابع — لا يكون في المسار."},
+  {t:"متغيرات",q:"التعريف الإجرائي يعني:",opts:["تعريف لغوي من القاموس","تحويل المفهوم إلى مؤشرات قابلة للقياس","كتابة تعريف نظري من مرجع","شرح المفهوم بأمثلة"],ans:1,exp:"التعريف الإجرائي يُحوّل المفهوم المجرد إلى مؤشرات ملموسة قابلة للقياس — وهو أساس بناء الفروض العلمية."},
+  {t:"أزمات",q:"الخصائص الأساسية الثلاث للأزمة هي:",opts:["الحدة والمدة والتعقيد","التهديد وضيق الوقت والمفاجأة","المفاجأة والخسائر والتصعيد","التهديد والتعقيد والشدة"],ans:1,exp:"الأزمة تتميز بثلاث خصائص: التهديد للقيم الأساسية — ضيق الوقت للاستجابة — المفاجأة في الحدوث."},
+  {t:"أزمات",q:"في تحليل أزمة أرمينيا-أذربيجان 2020، يُعد التقدم التكنولوجي العسكري (الطائرات المسيّرة) مثالاً على:",opts:["المتغير المستقل","المتغير التابع","المتغير الوسيط","المتغير المعدل"],ans:2,exp:"التقدم التكنولوجي العسكري في هذا التحليل هو متغير وسيط — يشرح كيف تحولت التحالفات الإقليمية غير المتوازنة إلى نتيجة عسكرية محددة."},
+  {t:"أزمات",q:"الفرق الجوهري بين الأزمة والكارثة هو:",opts:["الأزمة أشد خطورة دائماً","في الكارثة يمكن التدخل عبر التفاوض","في الأزمة يمكن التدخل ورفع التهديد عبر التفاوض","الكارثة أسرع في الحدوث"],ans:2,exp:"الأزمة مفاجأة تصاعدية ويمكن التدخل فيها — أما الكارثة فمفاجأة كاملة لا يمكن التدخل فيها لكن يمكن التخفيف من آثارها."},
+  {t:"أدوات",q:"أي نوع من الاستبيان يُستخدم مع الأطفال أو غير القادرين على القراءة؟",opts:["الاستبيان المغلق","الاستبيان المفتوح","الاستبيان بانتخاب الإجابة","الاستبيان باستخدام الصور"],ans:3,exp:"الاستبيان باستخدام الصور مثالي للأطفال أو أفراد غير مؤهلين تعليمياً لأنه لا يتطلب قدرة على القراءة والكتابة."},
+  {t:"أدوات",q:"أكثر أنواع المقابلة شيوعاً في البحث العلمي هو:",opts:["المنظمة","شبه المنظمة","غير المنظمة","المجموعة البؤرية"],ans:1,exp:"المقابلة شبه المنظمة تجمع بين المرونة والضبط — توفر حرية للمبحوث للتعبير مع الحفاظ على مسار بحثي واضح."},
+  {t:"اقترابات",q:"ما وحدة التحليل في اقتراب تحليل النظم عند إيستون؟",opts:["الفرد","المؤسسة","النظام","الجماعة"],ans:2,exp:"وحدة التحليل عند إيستون هي النظام — والنظام لا يتواجد في فراغ بل هو شبكة من التفاعلات السياسية مع بيئة داخلية وخارجية."},
+  {t:"اقترابات",q:"يُعد التغيير عند إيستون مرادفاً لـ:",opts:["الثورة","التكيف","الاضطراب","الصراع"],ans:1,exp:"عند إيستون التغيير = التكيف — أي قدرة النظام على التكيف مع البيئة المتغيرة للحفاظ على بقائه واستمراره."},
+  {t:"اقترابات",q:"الاقتراب الذي يرى أن الجماعة هي وحدة التحليل (وليس الفرد) هو:",opts:["المؤسسي","تحليل النظم","الجماعة","البنائية الوظيفية"],ans:2,exp:"اقتراب الجماعة يرى أن النظام السياسي هو شبكة معقدة من الجماعات وتفاعلاتها — الجماعة وليس الفرد هي وحدة التحليل."},
+  {t:"مشكلة",q:"ما الشرط الذي يجب مراعاته في الإطار الزمني للخطة البحثية؟",opts:["أن يكون طويلاً قدر الإمكان","أن يتناسب مع إمكانيات الباحث وأهداف الدراسة","أن يكون أكثر من عشر سنوات","أن يشمل مرحلة تاريخية بأكملها"],ans:1,exp:"الإطار الزمني يجب أن يتوافق مع قدرات الباحث المادية والزمنية — الأبحاث ذات الفترة الطويلة جداً تُصبح مشكلة لا يمكن إنجازها."},
+  {t:"أزمات",q:"في تحليل الأزمة الروسية-الأوكرانية، يُعد 'حجم التدخل العسكري الغربي' مثالاً على:",opts:["مؤشر مؤسسي","مؤشر اقتصادي","مؤشر إقليمي ودولي","مؤشر اجتماعي"],ans:2,exp:"حجم التدخل الخارجي (دعم الناتو والاتحاد الأوروبي) هو مؤشر إقليمي ودولي — يقيس درجة تدويل الأزمة وتحولها إلى صراع بالوكالة."},
+  {t:"متغيرات",q:"التساؤل 'ما الذي أثار اهتمام الباحث مما دفعه للتفكير في موضوعه؟' يتعلق بـ:",opts:["صياغة الفرضية","تحديد الإشكالية البحثية الحقيقية","اختيار أداة البحث","بناء الإطار النظري"],ans:1,exp:"هذا هو جوهر الإشكالية البحثية — الدكتورة تؤكد أنه يجب أن يكون هناك سبب يدفع للبحث وليس مجرد وصف ما ينوي الباحث عمله."},
+  {t:"أدوات",q:"أي من الآتي يُعد خطأً من أخطاء الباحث أثناء تسجيل المقابلة؟",opts:["استخدام مسجل صوتي","خطأ الاستبدال (استبدال ألفاظ المقابَل بكلمات أخرى)","تفريغ التسجيل دون تحريف","التأكد من موافقة المبحوث"],ans:1,exp:"خطأ الاستبدال يحدث إذا نسي الباحث ألفاظ المقابَل واستبدلها بكلمات قد يكون لها معنى مغاير — وهو يُفسد دقة البيانات."},
+  {t:"اقترابات",q:"ما نقد المنهج المؤسسي الرئيسي؟",opts:["لا يصلح إلا للدراسات المقارنة","لا يمكن استخدامه في المجتمعات الخالية من المؤسسات الحديثة","لا يتعامل مع المتغيرات","لا يأخذ الاقتصاد بعين الاعتبار"],ans:1,exp:"نقد المنهج المؤسسي الأول: لا يمكن استخدامه في معالجة السياسة داخل المجتمعات التي تخلو من المؤسسات الحديثة — يطبق فقط على الدول التي بلغت قدراً من النضج السياسي."}
+];
+
+const essayData = [
+  {t:"تعريف",label:"أنواع الأسئلة البحثية",q:"اشرح أنواع الأسئلة البحثية الأربعة مع مثال تطبيقي من أزمة سياسية على كل نوع.",ans:`<p><strong>١. التساؤل الاستكشافي:</strong> يمثل محاولة فهم أو إيضاح الظاهرة المدروسة.<br>مثال: ما طبيعة الأزمة السورية؟</p>
+    <p><strong>٢. التساؤل الوصفي:</strong> يقيس الأبعاد الكمية (مقدار — حجم — نسبة).<br>مثال: كم عدد النازحين جراء الأزمة الروسية-الأوكرانية؟</p>
+    <p><strong>٣. التساؤل التفسيري:</strong> يبحث عن الأسباب والنتائج (لماذا؟).<br>مثال: لماذا فشلت مبادرات وساطة الأمم المتحدة في أزمة غزة؟</p>
+    <p><strong>٤. التساؤل التقييمي:</strong> يهتم بقيمة الأثر المترتب وينتج توصيات.<br>مثال: ما مدى فاعلية استراتيجيات إدارة الأزمة الأوكرانية؟</p>
+    <div class="hl hl-b">مهم: أسئلة البحث لا تبدأ بـ"هل" لأنها تُعطي إجابات مختصرة بنعم أو لا دون قيمة بحثية</div>`},
+  {t:"مقارنة",label:"المشكلة البحثية وأسئلة البحث",q:"وازن بين المشكلة البحثية وأسئلة البحث من حيث التعريف والطبيعة والبناء والأخطاء الشائعة.",ans:`<table><tr><th>وجه المقارنة</th><th>أسئلة البحث</th><th>مشكلة البحث</th></tr>
+    <tr><td>التعريف</td><td>السؤال/الأسئلة التي يجيب عليها الباحث خلال البحث</td><td>الجملة التي توصف العلاقة بين متغيرات البحث</td></tr>
+    <tr><td>الطبيعة</td><td>جملة استفهامية دائماً</td><td>جملة افتراضية/بيانية عادةً</td></tr>
+    <tr><td>البناء</td><td>صيغة سؤال: "ماذا يحدث في حالة..."</td><td>جملة بيانية: "سيتحول النظام إلى..."</td></tr>
+    <tr><td>الأخطاء</td><td>لا تستخدم "هل" — لا تجاوب على التساؤلات في الإشكالية</td><td>لا تحول المشكلة إلى سؤال — لا تخلط التعريفات بالإشكالية — لا تغفل التسلسل الزمني</td></tr></table>`},
+  {t:"تطبيق",label:"تحليل عنوان بحثي",q:"قيّم العنوان التالي: 'إدارة الأزمات في الشرق الأوسط' وحدد أخطاءه ثم اقترح عنواناً صحيحاً.",ans:`<p><strong>أخطاء العنوان:</strong></p>
+    <ul>
+      <li>العلاقة البحثية غير واضحة (مجرد وصف بدون علاقة سببية)</li>
+      <li>لا يوجد متغير مستقل أو تابع</li>
+      <li>لا توجد إشكالية بحثية</li>
+      <li>لا يوجد إطار زمني</li>
+      <li>النطاق الجغرافي واسع جداً</li>
+    </ul>
+    <p><strong>العنوان المقترح الصحيح:</strong></p>
+    <div class="hl">أثر الدعم العسكري الغربي (متغير مستقل) على مسار الأزمة الروسية-الأوكرانية (متغير تابع): 2022-2024</div>
+    <p>هذا العنوان: يحتوي على متغيرين واضحين — نطاق جغرافي محدد — إطار زمني — يصلح لأن يكون رسالة علمية.</p>`},
+  {t:"تعريف",label:"أنواع القوة",q:"اشرح مفهوم القوة الشاملة وأنواعها مع أمثلة تطبيقية معاصرة.",ans:`<p><strong>القوة الشاملة:</strong> قدرة الدولة على استخدام كل مواردها الملموسة وغير الملموسة بطريقة تؤثر على سلوك الدول الأخرى.</p>
+    <ul>
+      <li><strong>القوة الصلبة:</strong> إكراه عسكري واقتصادي — مثال: العقوبات الأمريكية على إيران</li>
+      <li><strong>القوة الناعمة (جوزيف ناي):</strong> الجذب بالثقافة والدبلوماسية — مثال: انتشار الثقافة الأمريكية</li>
+      <li><strong>القوة الذكية:</strong> الجمع بين الصلبة والناعمة</li>
+      <li><strong>القوة الحادة (Sharp Power):</strong> للدول السلطوية — تستهدف الديمقراطيات من الداخل — مثال: التأثير الصيني والروسي</li>
+      <li><strong>القوة الحيوية (Vital Power):</strong> ظهرت بعد كورونا — القدرة على تطوير اللقاحات والصناعة الدوائية</li>
+    </ul>
+    <div class="hl">معادلة القوة الشاملة = (اقتصادية + عسكرية + كتلة حيوية) × (سياسية + دبلوماسية + معنوية + تكنولوجية + إعلامية) ÷ 5</div>`},
+  {t:"تقييم",label:"نماذج عناوين خاطئة",q:"فيما يلي خمسة عناوين أبحاث. حدد أخطاء كل منها.",ans:`<ul>
+    <li><strong>"أثر الأزمات على الاستقرار السياسي في الشرق الأوسط":</strong> لا يحدد نوع الأزمات — المتغير المستقل غير واضح — نطاق جغرافي واسع — فترة زمنية غير محددة</li>
+    <li><strong>"إدارة الأزمات في العالم المعاصر":</strong> واسع للغاية يصلح لكتاب وليس رسالة — لا يحتوي على متغيرات — لا يحدد حالة دراسية</li>
+    <li><strong>"دور إدارة الأزمات في إدارة الأزمات السياسية":</strong> تكرار المفهوم نفسه — ضعف الدقة المفاهيمية — لا يوضح العلاقة بين المتغيرات</li>
+    <li><strong>"إدارة الأزمات الاقتصادية في مصر منذ 1952 حتى 2025":</strong> فترة زمنية طويلة جداً — تعدد الأزمات دون تحديد حالة — صعوبة البيانات وتحليلها</li>
+    <li><strong>"استراتيجيات إدارة الأزمات الصحية":</strong> غياب النطاق الجغرافي — غياب الفترة الزمنية — لا يحدد حالة تطبيقية</li>
+  </ul>`}
+];
+
+const tfData = [
+  {t:"مفاهيم",q:"يعتمد البحث العلمي في إدارة الأزمات على منهجية منظمة لتحليل الظواهر المرتبطة بالأزمات.",ans:true,exp:"صح — البحث العلمي بطبيعته منهجي منظم يهدف لدراسة الظواهر بأسلوب علمي."},
+  {t:"مفاهيم",q:"يهدف البحث العلمي إلى وصف الظواهر فقط دون تفسيرها.",ans:false,exp:"خطأ — أهداف البحث العلمي الخمسة تشمل: التوصيف والتفسير والتحليل والتقييم والتنبؤ."},
+  {t:"مفاهيم",q:"يمكن صياغة مشكلة البحث دون الرجوع إلى الأدبيات السابقة.",ans:false,exp:"خطأ — مراجعة الأدبيات ضرورية لتحديد ما قدمه الباحثون السابقون وتحديد الفجوة البحثية التي يسدها بحثك."},
+  {t:"مفاهيم",q:"الفجوة البحثية تعني عدم وجود أي دراسات سابقة حول الموضوع.",ans:false,exp:"خطأ — الفجوة البحثية تعني ما لم يتناوله الباحثون السابقون أو جانب جديد أو حالة لم تُدرس — وليس غياباً تاماً للدراسات."},
+  {t:"مفاهيم",q:"يجب أن يكون عنوان البحث محدداً وواضحاً ويشمل المتغيرين الرئيسيين.",ans:true,exp:"صح — من شروط العنوان الجيد: الوضوح — الاختصار — اشتمال المتغير المستقل والتابع — تضمين إطار زمني."},
+  {t:"متغيرات",q:"المتغير المستقل هو المتغير الذي يتأثر بمتغير آخر.",ans:false,exp:"خطأ — المتغير المستقل يؤثر في غيره، أما المتغير الذي يتأثر فهو التابع."},
+  {t:"متغيرات",q:"يمكن إجراء بحث علمي دون تحديد المتغيرات.",ans:false,exp:"خطأ — تحديد المتغيرات أساسي في البحث العلمي لضبط نطاق الدراسة وبناء الإطار التحليلي."},
+  {t:"متغيرات",q:"الفرضية هي إجابة أولية قابلة للاختبار عن سؤال البحث.",ans:true,exp:"صح — الفرض العلمي هو توقع مؤقت قابل للاختبار الإمبيريقي مبني على الإطار النظري والدراسات السابقة."},
+  {t:"متغيرات",q:"الفرض الارتباطي المحدد يحدد اتجاه العلاقة (طردية أو عكسية).",ans:true,exp:"صح — الفرض الارتباطي المحدد يحدد ليس فقط وجود علاقة بل أيضاً اتجاهها: طردية (يزيد مع يزيد) أو عكسية."},
+  {t:"مناهج",q:"المنهج الوصفي يهدف إلى وصف الظواهر وتحليلها فقط دون إثبات السببية.",ans:true,exp:"صح — المنهج الوصفي يصف الواقع كما هو دون تدخل في المتغيرات لذا لا يستطيع إثبات علاقات سببية."},
+  {t:"مناهج",q:"يجب اختيار المنهج البحثي قبل تحديد مشكلة البحث.",ans:false,exp:"خطأ — يجب أولاً تحديد المشكلة البحثية ثم اختيار المنهج الأنسب لطبيعتها — المنهج خادم للمشكلة وليس العكس."},
+  {t:"مناهج",q:"يمكن الجمع بين أكثر من منهج في البحث العلمي الواحد.",ans:true,exp:"صح — المنهج المختلط (Mixed Methods) يجمع بين المنهج الكمي والكيفي للحصول على فهم أعمق وأشمل."},
+  {t:"أزمات",q:"تشمل إدارة الأزمات مراحل الوقاية والاستعداد والاستجابة والتعافي.",ans:true,exp:"صح — إدارة الأزمات عملية شاملة تتجاوز مرحلة الاستجابة الفورية لتشمل ما قبل الأزمة وما بعدها."},
+  {t:"أزمات",q:"الكارثة والأزمة متشابهتان في أنه يمكن التدخل في كليهما عبر التفاوض.",ans:false,exp:"خطأ — في الأزمة يمكن التدخل ورفع التهديد عبر التفاوض، أما الكارثة فلا يمكن التدخل فيها لكن يمكن التخفيف من آثارها."},
+  {t:"أزمات",q:"أزمة روسيا-أوكرانيا تمثل حالة ذات شدة منخفضة في معظم مؤشرات الأزمات السياسية.",ans:false,exp:"خطأ — تُعد هذه الأزمة حالة 'قصوى' أو 'ذروة' على معظم المؤشرات: شدة عسكرية وأمنية — إقليمية ودولية — إنسانية — اقتصادية."},
+  {t:"مناهج",q:"اقتراب تحليل النظم عند إيستون لا يصلح في مرحلة التغيير الثوري.",ans:true,exp:"صح — إيستون يرى التغيير كتكيف ضمن حدود الاستقرار — لذا اقترابه لا يُفسر حالات التغيير الثوري الجذري."},
+  {t:"مناهج",q:"الدور السياسي للأبنية غير السياسية من أهم مكتسبات اقتراب البنائية الوظيفية.",ans:true,exp:"صح — من أبرز مساهمات الموند في البنائية الوظيفية: الكشف عن الأدوار السياسية التي تؤديها مؤسسات غير رسمية كالأسرة والمسجد."}
+];
+
+const studiesStepsData = [
+  {n:1,c:"#c8a84b",t:"المقدمة",d:'فقرة أو فقرتين — تنتقل من العام إلى الخاص — تُمهد للإشكالية ولا تُحددها'},
+  {n:2,c:"#52c87a",t:'الإشكالية البحثية (اللغز)',d:'تبدأ بـ"على الرغم من..." — فقرة جدلية توضح التناقض الذي يُبرر البحث'},
+  {n:3,c:"#8ea8c8",t:'التساؤلات البحثية',d:'التساؤل الرئيسي + الأسئلة الفرعية — تتنوع بين: ما/ماذا/كيف/إلى أي مدى/ما السيناريوهات — لا تبدأ بـ"هل"'},
+  {n:4,c:"#e89050",t:'الأهداف',d:'رصد — دراسة — تحليل — تقييم — استشراف'},
+  {n:5,c:"#c8a84b",t:'المتغيرات',d:'تحديد المتغير المستقل والتابع والوسيط والمعدل إذا وُجد'},
+  {n:6,c:"#9070c8",t:'الإطار الزماني والمكاني والمجالي',d:'تحديد الحدود الثلاثية للدراسة بوضوح'},
+  {n:7,c:"#52c87a",t:'الإطار المفاهيمي',d:'ذِكر 3 مفاهيم رئيسية مع شرحها وتوضيحها إجرائياً بمؤشرات قابلة للقياس'},
+  {n:8,c:"#8ea8c8",t:'الإطار النظري والمنهاجي',d:'اسم النظرية المستخدمة وفروضها وكيفية تطبيقها في البحث + الأداة التحليلية (استبيان/SWOT/PESTLE...)'},
+  {n:9,c:"#e89050",t:'الدراسات السابقة',d:'محاور التصنيف حسب المتغيرات — ذِكر أوجه الاتفاق والاختلاف — الفجوة البحثية — الجديد في الدراسة'},
+  {n:10,c:"#c8a84b",t:'الجدول الختامي',d:'يربط بين الأهداف والأسئلة والتقسيم المقترح والأدوات المنهاجية — ختامي وإلزامي'}
+];
+
+const titleErrorsData = [
+  {en:"أثر الأزمات على الاستقرار السياسي في الشرق الأوسط",errs:["لا يحدد نوع الأزمات","المتغير المستقل غير واضح","نطاق جغرافي واسع جداً","فترة زمنية غير محددة"]},
+  {en:"إدارة الأزمات في العالم المعاصر",errs:["واسع للغاية (يصلح لكتاب وليس رسالة)","لا يحتوي على متغيرات","لا يحدد حالة دراسية أو نطاقاً جغرافياً","لا يوضح سؤالاً بحثياً محدداً"]},
+  {en:"دور إدارة الأزمات في إدارة الأزمات السياسية",errs:["تكرار المفهوم نفسه","ضعف الدقة المفاهيمية","لا يوضح العلاقة بين المتغيرات"]},
+  {en:"إدارة الأزمات الاقتصادية في مصر منذ عام 1952 حتى 2025",errs:["فترة زمنية طويلة جداً لرسالة علمية","تعدد الأزمات الاقتصادية دون تحديد حالة","صعوبة جمع البيانات وتحليلها"]},
+  {en:"استراتيجيات إدارة الأزمات الصحية",errs:["غياب النطاق الجغرافي","غياب الفترة الزمنية","لا يحدد أزمة أو حالة تطبيقية"]}
+];
+
+// ══════════════ STATE ══════════════
+let notes = JSON.parse(localStorage.getItem('mz_notes')||'[]');
+let files = JSON.parse(localStorage.getItem('mz_files')||'[]');
+let videos = JSON.parse(localStorage.getItem('mz_vids')||'[]');
+let curQuiz=[],curQ=0,answered=false,score={c:0,w:0};
+let quizTopic='all',fcCat='all',essCat='all',tfCat='all';
+
+// ══════════════ INIT ══════════════
+function enterApp(){
+  document.getElementById('splash').classList.add('out');
+  setTimeout(()=>{document.getElementById('splash').style.display='none';document.getElementById('app').classList.add('on');},600);
+}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');}
+function nav(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('on');
+  document.querySelectorAll('.nav-item').forEach(n=>{if(n.getAttribute('onclick')?.includes("'"+id+"'"))n.classList.add('active');});
+  if(window.innerWidth<=768)document.getElementById('sidebar').classList.remove('open');
+  if(id==='chapters')renderChapters();
+  if(id==='flashcards')renderFC();
+  if(id==='quiz')initQuiz();
+  if(id==='essay')renderEssay();
+  if(id==='truefalse')renderTF();
+  if(id==='studies')renderStudies();
+  if(id==='notes')renderNotes();
+  if(id==='uploads')renderFiles();
+  if(id==='videos')renderVids();
+  if(id==='exam')renderExam();
+}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2500);}
+
+// ══════════════ CHAPTERS ══════════════
+function renderChapters(filter=''){
+  const l=document.getElementById('chList');l.innerHTML='';
+  chapters.filter(c=>!filter||c.title.includes(filter)||c.body.includes(filter)).forEach((ch,i)=>{
+    const d=document.createElement('div');d.className='chapter-item';
+    d.innerHTML=`<div class="ch-head" onclick="toggleCh(this)">
+      <div class="ch-num">${ch.n}</div>
+      <div class="ch-name">${ch.title}</div>
+      <div>${ch.tags.map(t=>`<span class="tag tg">${t}</span>`).join('')}</div>
+      <span class="ch-arrow">▾</span>
+    </div><div class="ch-body">${ch.body}</div>`;
+    l.appendChild(d);
+  });
+}
+function toggleCh(h){const b=h.nextElementSibling;b.classList.toggle('open');h.querySelector('.ch-arrow').style.transform=b.classList.contains('open')?'rotate(180deg)':'';}
+function filterChapters(v){renderChapters(v);}
+
+// ══════════════ FLASHCARDS ══════════════
+function renderFC(){
+  const g=document.getElementById('fcGrid');g.innerHTML='';
+  (fcCat==='all'?flashcards:flashcards.filter(f=>f.cat===fcCat)).forEach(f=>{
+    const d=document.createElement('div');d.className='fc';
+    d.onclick=function(){this.classList.toggle('flipped');};
+    d.innerHTML=`<div class="fc-inner">
+      <div class="fc-front"><div class="fc-cat">${f.cat}</div><div class="fc-q">${f.q}</div><div class="fc-hint">انقر للإجابة ↩</div></div>
+      <div class="fc-back"><div class="fc-cat">الإجابة</div><div class="fc-a">${f.a}</div></div>
+    </div>`;
+    g.appendChild(d);
+  });
+}
+function filtFC(c,btn){fcCat=c;document.querySelectorAll('#fcFilt .filt-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderFC();}
+
+// ══════════════ QUIZ ══════════════
+function loadQuiz(t,btn){quizTopic=t;document.querySelectorAll('#qzTopics .filt-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');initQuiz();}
+function initQuiz(){
+  const pool=quizTopic==='all'?[...quizData]:quizData.filter(q=>q.t===quizTopic);
+  curQuiz=[...pool].sort(()=>Math.random()-.5).slice(0,Math.min(10,pool.length));
+  curQ=0;score={c:0,w:0};renderQ();
+}
+function renderQ(){
+  const c=document.getElementById('quizContainer');
+  if(curQ>=curQuiz.length){showScore();return;}
+  const q=curQuiz[curQ];const pct=Math.round((curQ/curQuiz.length)*100);answered=false;
+  c.innerHTML=`<div class="qz-prog"><div class="qz-prog-fill" style="width:${pct}%"></div></div>
+  <div class="qz-meta">سؤال ${curQ+1} من ${curQuiz.length} <span class="tag tg">${q.t}</span></div>
+  <div class="qz-card"><div class="qz-q">${q.q}</div>
+  <div class="qz-opts">${q.opts.map((o,i)=>`<div class="qz-opt" onclick="ansQ(${i},${q.ans})"><div class="opt-ltr">${['أ','ب','ج','د'][i]}</div><span>${o}</span></div>`).join('')}</div>
+  <div class="qz-exp" id="qExp">💡 <strong>التعليل:</strong> ${q.exp}</div></div>
+  <div class="qz-nav"><button class="btn btn-o btn-sm" onclick="initQuiz()">🔄 إعادة</button><button class="btn btn-g btn-sm" id="nBtn" onclick="nextQ()" style="display:none">التالي ←</button></div>`;
+}
+function ansQ(chosen,correct){
+  if(answered)return;answered=true;
+  document.querySelectorAll('.qz-opt').forEach((o,i)=>{o.classList.add('disabled');if(i===correct)o.classList.add('correct');if(i===chosen&&chosen!==correct)o.classList.add('wrong');});
+  document.getElementById('qExp').classList.add('on');
+  chosen===correct?score.c++:score.w++;
+  document.getElementById('nBtn').style.display='block';
+}
+function nextQ(){curQ++;renderQ();}
+function showScore(){
+  const pct=Math.round((score.c/curQuiz.length)*100);
+  const msg=pct>=80?'ممتاز! 🎉':pct>=60?'جيد 👍':'راجع المحاضرات 📚';
+  document.getElementById('quizContainer').innerHTML=`<div class="score-card">
+    <div class="score-big">${pct}%</div><div style="color:var(--text2);margin:.3rem 0 1.2rem">${msg}</div>
+    <div class="s-bar-row"><div class="s-bar-lbl">صحيح</div><div class="s-bar"><div class="s-bar-fill fill-g" style="width:${score.c/curQuiz.length*100}%"></div></div><div style="color:var(--green);font-weight:700;min-width:25px;">${score.c}</div></div>
+    <div class="s-bar-row"><div class="s-bar-lbl">خطأ</div><div class="s-bar"><div class="s-bar-fill fill-r" style="width:${score.w/curQuiz.length*100}%"></div></div><div style="color:var(--red);font-weight:700;min-width:25px;">${score.w}</div></div>
+    <div style="display:flex;gap:.7rem;justify-content:center;margin-top:1.2rem;">
+      <button class="btn btn-g btn-sm" onclick="initQuiz()">🔄 مرة أخرى</button>
+      <button class="btn btn-o btn-sm" onclick="nav('flashcards')">🃏 راجع البطاقات</button>
+    </div></div>`;
+}
+
+// ══════════════ ESSAY ══════════════
+let essCurr=[];
+function renderEssay(){
+  const data=essCat==='all'?essayData:essayData.filter(e=>e.t===essCat);
+  document.getElementById('essList').innerHTML=data.map((e,i)=>`
+    <div class="es-q">
+      <div><span class="tag tg">${e.t}</span> <span class="tag tb">${e.label}</span></div>
+      <div class="es-q-text" style="margin-top:.5rem;">❓ ${e.q}</div>
+      <button class="show-ans" onclick="toggleEs(${i})">👁 إظهار الإجابة النموذجية</button>
+      <div class="es-ans" id="esa${i}">${e.ans}</div>
+    </div>`).join('');
+  essCurr=data;
+}
+function toggleEs(i){const a=document.getElementById('esa'+i);a.classList.toggle('on');a.previousElementSibling.textContent=a.classList.contains('on')?'🙈 إخفاء الإجابة':'👁 إظهار الإجابة النموذجية';}
+function filtEss(c,btn){essCat=c;document.querySelectorAll('#essFilt .filt-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderEssay();}
+
+// ══════════════ TRUE/FALSE ══════════════
+function renderTF(){
+  const data=tfCat==='all'?tfData:tfData.filter(t=>t.t===tfCat);
+  document.getElementById('tfList').innerHTML=data.map((item,i)=>`
+    <div class="card" style="margin-bottom:.7rem;">
+      <div style="display:flex;align-items:flex-start;gap:1rem;flex-wrap:wrap;">
+        <div style="flex:1;min-width:200px;">
+          <span class="tag tb" style="margin-bottom:.5rem;display:inline-block;">${item.t}</span>
+          <div style="font-size:.9rem;color:var(--text);line-height:1.8;">${item.q}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:.4rem;align-items:flex-start;">
+          <button class="btn btn-sm" style="background:rgba(82,200,122,.12);border:1px solid var(--green);color:var(--green);" onclick="revealTF(${i},true)">✅ صح</button>
+          <button class="btn btn-sm" style="background:rgba(240,120,120,.12);border:1px solid var(--red);color:var(--red);" onclick="revealTF(${i},false)">❌ خطأ</button>
+        </div>
+      </div>
+      <div id="tfr${i}" style="display:none;margin-top:.8rem;" class="hl ${item.ans?'hl-g':''}">
+        <strong>${item.ans?'✅ صح':'❌ خطأ'}</strong> — ${item.exp}
+      </div>
+    </div>`).join('');
+}
+function revealTF(i,guess){
+  const r=document.getElementById('tfr'+i);r.style.display='block';
+  const item=tfCat==='all'?tfData[i]:(tfData.filter(t=>t.t===tfCat))[i];
+  if(guess===item.ans){r.style.borderRightColor='var(--green)';}else{r.style.borderRightColor='var(--red)';}
+}
+function filtTF(c,btn){tfCat=c;document.querySelectorAll('#tfFilt .filt-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderTF();}
+
+// ══════════════ STUDIES ══════════════
+function renderStudies(){
+  const c=document.getElementById('studiesSteps');
+  c.innerHTML=studiesStepsData.map(s=>`
+    <div class="step-row">
+      <div class="step-n" style="background:${s.c};">${s.n}</div>
+      <div class="step-info"><div class="step-title" style="color:${s.c};">${s.t}</div><div class="step-desc">${s.d}</div></div>
+    </div>`).join('');
+  const e=document.getElementById('titleErrors');
+  e.innerHTML=titleErrorsData.map((item,i)=>`
+    <div class="card" style="margin-bottom:.7rem;">
+      <div style="color:var(--red);font-size:.88rem;font-weight:600;margin-bottom:.5rem;">❌ "${item.en}"</div>
+      <div style="display:flex;flex-wrap:wrap;gap:.3rem;">${item.errs.map(err=>`<span class="tag tr">${err}</span>`).join('')}</div>
+    </div>`).join('');
+}
+
+// ══════════════ EXAM ══════════════
+function renderExam(){
+  document.getElementById('examContent').innerHTML=`
+  <div class="card" style="margin-bottom:1rem;">
+    <div class="card-h">📋 الأقسام الأربعة للامتحان</div>
+    ${[
+      {n:1,title:'صح وخطأ',desc:'جمل وعبارات يُحدد الطالب صحتها أو خطأها — يُتوقع وجود تعليل أو تصحيح.'},
+      {n:2,title:'عناوين خاطئة واستخراج المتغيرات',desc:'مجموعة عناوين أبحاث خاطئة — يُطلب: تحديد الأخطاء + تصحيح العنوان + استخراج المتغيرات المستقلة والتابعة.'},
+      {n:3,title:'السؤال الإبداعي',desc:'يتطلب التفكير الناقد والتحليل الاستراتيجي — غالباً تحليل أزمة سياسية أو وضع سيناريوهات أو اقتراح استراتيجية.'},
+      {n:4,title:'التكليف الخاص',desc:'سؤال يتعلق بالخطة البحثية الفردية للطالب — يُقيَّم على أساس الخطة المقدمة مسبقاً وعناصرها.'}
+    ].map(s=>`<div class="exam-section"><div class="exam-sec-head"><div class="exam-sec-num">${s.n}</div><div class="exam-sec-title">${s.title}</div></div><div class="exam-sec-body"><p>${s.desc}</p></div></div>`).join('')}
+  </div>
+  <div class="card" style="margin-bottom:1rem;">
+    <div class="card-h">🏆 مفاتيح النجاح في الامتحان</div>
+    <div style="display:flex;flex-direction:column;gap:.5rem;">
+      <div class="hl">في صح/خطأ: ابحث دائماً عن الكلمة التي تُغير المعنى (فقط — دائماً — لا يمكن...)</div>
+      <div class="hl hl-b">في تقييم العناوين: فكر في: هل يوجد متغيران؟ هل هناك إطار زمني؟ هل النطاق الجغرافي محدد؟</div>
+      <div class="hl hl-g">في السؤال الإبداعي: طبّق نموذج المتغيرات — ارسم خريطة الأطراف — ضع سيناريوهات</div>
+      <div class="hl" style="border-right-color:var(--orange);background:rgba(232,144,80,.07);color:var(--orange);">في التكليف الخاص: تأكد من أن خطتك تنتهي بالجدول الذي يربط الأهداف بالأسئلة والأدوات</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-h">📝 نموذج لصياغة الإشكالية الصحيحة</div>
+    <div class="hl hl-b" style="font-size:.88rem;line-height:1.9;">
+      <strong>مثال صحيح:</strong><br>
+      "على الرغم من الجهود الدولية المتكررة للتهدئة، تكشف الحرب على غزة محدودية فعالية النظام الدولي في إدارة النزاعات المسلحة، وتطرح تساؤلات حول توازن القوى، وانحياز المنظمات الأممية، وحدود القانون الدولي الإنساني في مواجهة القوى الكبرى."
+    </div>
+    <div class="hl" style="margin-top:.7rem;font-size:.85rem;">
+      <strong>التساؤل الرئيسي الناتج:</strong><br>
+      "إلى أي مدى تعكس إدارة الأمم المتحدة للحرب على غزة أزمة فعالية النظام الدولي في إدارة الصراعات؟"
+    </div>
+  </div>`;
+}
+
+// ══════════════ NOTES ══════════════
+function saveNote(){
+  const t=document.getElementById('noteTxt').value.trim();
+  if(!t){toast('اكتب ملاحظتك أولاً!');return;}
+  notes.unshift({id:Date.now(),topic:document.getElementById('noteTopic').value,text:t,date:new Date().toLocaleDateString('ar-EG')});
+  localStorage.setItem('mz_notes',JSON.stringify(notes));
+  document.getElementById('noteTxt').value='';
+  renderNotes();toast('✅ تم حفظ الملاحظة');
+}
+function renderNotes(){
+  document.getElementById('notesCnt').textContent=notes.length;
+  const l=document.getElementById('notesList');
+  l.innerHTML=notes.length?notes.map(n=>`<div class="note-item"><button class="note-del" onclick="delNote(${n.id})">🗑</button><span class="note-topic">${n.topic}</span><div class="note-text">${n.text}</div><div class="note-date">${n.date}</div></div>`).join(''):'<div style="text-align:center;color:var(--text2);padding:2rem;font-size:.88rem;">لا توجد ملاحظات بعد</div>';
+}
+function delNote(id){notes=notes.filter(n=>n.id!==id);localStorage.setItem('mz_notes',JSON.stringify(notes));renderNotes();toast('🗑 تم الحذف');}
+
+// ══════════════ FILES ══════════════
+function dropF(e){e.preventDefault();document.getElementById('upZone').classList.remove('drag');handleFiles(e.dataTransfer.files);}
+function handleFiles(fl){
+  const topic=document.getElementById('fileTopicSel').value;
+  Array.from(fl).forEach(f=>{
+    const ico=f.name.endsWith('.pdf')?'📄':f.name.match(/\.ppt/)?'📊':f.name.match(/\.doc/)?'📝':f.type.startsWith('image/')?'🖼':'📁';
+    files.unshift({id:Date.now()+Math.random(),name:f.name,size:(f.size/1024).toFixed(0)+' KB',topic,ico,date:new Date().toLocaleDateString('ar-EG')});
+  });
+  localStorage.setItem('mz_files',JSON.stringify(files));renderFiles();toast('✅ تم رفع الملف');
+}
+function renderFiles(){
+  document.getElementById('filesCnt').textContent=files.length;
+  document.getElementById('fileList').innerHTML=files.length?files.map(f=>`<div class="file-item"><div class="file-ico">${f.ico}</div><div class="file-info"><div class="file-name">${f.name}</div><div class="file-meta">${f.size} · ${f.topic} · ${f.date}</div></div><button class="file-del" onclick="delFile(${f.id})">🗑</button></div>`).join(''):'<div style="text-align:center;color:var(--text2);padding:2rem;font-size:.88rem;">لا توجد ملفات</div>';
+}
+function delFile(id){files=files.filter(f=>f.id!==id);localStorage.setItem('mz_files',JSON.stringify(files));renderFiles();toast('🗑 تم الحذف');}
+
+// ══════════════ VIDEOS ══════════════
+function addVid(){
+  const url=document.getElementById('vidUrl').value.trim();
+  const title=document.getElementById('vidTitle').value.trim();
+  if(!url||!title){toast('أدخل العنوان والرابط!');return;}
+  videos.unshift({id:Date.now(),url,title,topic:document.getElementById('vidTopic').value});
+  localStorage.setItem('mz_vids',JSON.stringify(videos));
+  document.getElementById('vidUrl').value='';document.getElementById('vidTitle').value='';
+  renderVids();toast('✅ تم إضافة الرابط');
+}
+function renderVids(){
+  document.getElementById('vidList').innerHTML=videos.length?videos.map(v=>`<div class="vid-item"><div class="vid-thumb">▶</div><div class="vid-info"><div class="vid-title">${v.title}</div><div class="vid-topic">${v.topic}</div></div><a href="${v.url}" target="_blank" class="vid-open">فتح ▶</a><button style="background:none;border:none;color:var(--red);cursor:pointer;font-size:.85rem;opacity:.5;margin-right:.3rem;" onclick="delVid(${v.id})">🗑</button></div>`).join(''):'<div style="text-align:center;color:var(--text2);padding:2rem;font-size:.88rem;">لا توجد روابط</div>';
+}
+function delVid(id){videos=videos.filter(v=>v.id!==id);localStorage.setItem('mz_vids',JSON.stringify(videos));renderVids();}
+
+// ══════════════ BOOT ══════════════
+renderNotes();renderFiles();renderVids();
+</script>
+</body>
+</html>
